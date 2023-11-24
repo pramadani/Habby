@@ -1,33 +1,28 @@
 package com.example.habby.data
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class HabitViewModel(private val habitRepository: HabitRepository = HabitRepository()) : ViewModel() {
+class HabitViewModel(private val dao: HabitDao) : ViewModel() {
 
-    // LiveData untuk mendapatkan daftar kebiasaan
-    val allHabits: LiveData<List<Habit>> = habitRepository.allHabitsLiveData
+    private val _habitList = MutableStateFlow<List<Habit>>(emptyList())
+    val habitList: StateFlow<List<Habit>> = _habitList
 
-    // Fungsi untuk memasukkan kebiasaan ke dalam database menggunakan coroutine
+    init {
+        viewModelScope.launch {
+            dao.getAllHabits()
+                .collect { habits ->
+                    _habitList.value = habits
+                }
+        }
+    }
+
     fun insertHabit(habit: Habit) {
         viewModelScope.launch {
-            habitRepository.insert(habit)
-        }
-    }
-
-    // Fungsi untuk mengupdate kebiasaan di dalam database menggunakan coroutine
-    fun updateHabit(habit: Habit) {
-        viewModelScope.launch {
-            habitRepository.update(habit)
-        }
-    }
-
-    // Fungsi untuk menghapus kebiasaan dari database menggunakan coroutine
-    fun deleteHabit(habit: Habit) {
-        viewModelScope.launch {
-            habitRepository.delete(habit)
+            dao.insertHabit(habit)
         }
     }
 }

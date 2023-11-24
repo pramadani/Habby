@@ -3,38 +3,51 @@ package com.example.habby
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.example.habby.data.Habit
+import com.example.habby.data.HabitDatabase
 import com.example.habby.data.HabitViewModel
 import com.example.habby.ui.theme.HabbyTheme
 
 
 class MainActivity : ComponentActivity() {
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            HabitDatabase::class.java,
+            "contacts.db"
+        ).build()
+    }
+
+    private val viewModel by viewModels<HabitViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return HabitViewModel(db.habitDao()) as T
+                }
+            }
+        }
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -44,42 +57,30 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HabitScreen()
+                    HabitScreen(viewModel)
                 }
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitScreen(viewModel: HabitViewModel = viewModel()) {
-    val habits by viewModel.allHabits.observeAsState(initial = emptyList())
+fun HabitScreen(viewModel: HabitViewModel) {
+    val habits = viewModel.habitList.collectAsState().value
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Habit Tracker") },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            viewModel.insertHabit(
-                                Habit(name = "New Habit", description = "", frequency = 0)
-                            )
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add Habit")
-                    }
-                }
-            )
+    Column {
+        IconButton(
+            onClick = {
+                viewModel.insertHabit(
+                    Habit(name = "New Habit", description = "", frequency = 0)
+                )
+            }
+        ) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Add Habit")
         }
-    ) { innerPadding ->
-        val modifier = Modifier.padding(innerPadding)
+
         HabitList(
-            habits = habits,
-            modifier = modifier,
-            onEditClick = { habitId -> /* Handle edit click */ },
-            onDeleteClick = { habitId -> /* Handle delete click */ }
+            habits = habits
         )
     }
 }
@@ -87,39 +88,22 @@ fun HabitScreen(viewModel: HabitViewModel = viewModel()) {
 @Composable
 fun HabitList(
     habits: List<Habit>,
-    modifier: Modifier = Modifier,
-    onEditClick: (Long) -> Unit,
-    onDeleteClick: (Long) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn {
         items(habits) { habit ->
             HabitItem(
                 habit = habit,
-                onEditClick = { onEditClick(habit.id) },
-                onDeleteClick = { onDeleteClick(habit.id) }
             )
         }
     }
 }
 
 @Composable
-fun HabitItem(habit: Habit, onEditClick: () -> Unit, onDeleteClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(MaterialTheme.colorScheme.background)
-    ) {
+fun HabitItem(habit: Habit) {
+    Row {
         Column(modifier = Modifier.weight(1f)) {
             Text(text = habit.name)
             Text(text = habit.description)
         }
-        IconButton(onClick = onEditClick) {
-            Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Habit")
-        }
-        IconButton(onClick = onDeleteClick) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Habit")
-        }
     }
 }
-
