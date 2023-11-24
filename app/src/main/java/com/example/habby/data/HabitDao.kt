@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HabitDao {
     @Query("SELECT * FROM habits")
-    suspend fun getAllHabits(): Flow<List<Habit>>
+    fun getAllHabits(): Flow<List<Habit>>
 
     @Insert
     suspend fun insertHabit(habit: Habit)

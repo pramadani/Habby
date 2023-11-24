@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         Room.databaseBuilder(
             applicationContext,
             HabitDatabase::class.java,
-            "contacts.db"
+            "habit.db"
         ).build()
     }
 
