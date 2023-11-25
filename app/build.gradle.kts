@@ -87,4 +87,6 @@ dependencies {
 
     //noinspection LifecycleAnnotationProcessorWithJava8
     ksp("androidx.lifecycle:lifecycle-compiler:2.6.2")
+
+    implementation("androidx.navigation:navigation-compose:2.7.5")
 }

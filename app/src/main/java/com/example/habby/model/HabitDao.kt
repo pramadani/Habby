@@ -1,4 +1,4 @@
-package com.example.habby.data
+package com.example.habby.model
 
 import androidx.room.Dao
 import androidx.room.Delete

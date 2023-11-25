@@ -1,4 +1,4 @@
-package com.example.habby.data
+package com.example.habby.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

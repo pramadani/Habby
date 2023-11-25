@@ -1,7 +1,9 @@
-package com.example.habby.data
+package com.example.habby.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.habby.model.Habit
+import com.example.habby.model.HabitDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
