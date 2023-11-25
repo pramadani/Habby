@@ -1,7 +1,10 @@
 package com.example.habby.view
 
+import android.content.Intent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -9,7 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.example.habby.MainActivity
 import com.example.habby.model.Habit
+import com.example.habby.notification.Notification
 import com.example.habby.viewmodel.HabitViewModel
 
 @Composable
@@ -27,10 +33,21 @@ fun HabitPage(viewModel: HabitViewModel) {
             Text("Add Habit")
         }
 
+        val intent = Intent()
+        val context = LocalContext.current
+        val service = Notification(context)
+
+        Box(modifier = Modifier.fillMaxSize()) {
+            Button(onClick = { service.showNotification(context, intent) }) {
+                Text(text = "Show Notification")
+            }
+        }
+
         HabitList(
             habits = habits
         )
     }
+
 }
 
 @Composable
