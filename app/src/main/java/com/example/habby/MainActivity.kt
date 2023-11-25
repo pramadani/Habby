@@ -11,7 +11,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.habby.model.getDatabase
@@ -23,7 +25,6 @@ import com.example.habby.viewmodel.HabitViewModel
 
 @Suppress("UNCHECKED_CAST")
 class MainActivity : ComponentActivity() {
-    private val appContext = applicationContext
     private val habitViewModel by viewModels<HabitViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
         setContent {
             HabbyTheme {
                 // A surface container using the 'background' color from the theme
@@ -43,7 +45,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavLayout(viewModel = habitViewModel)
+                    CompositionLocalProvider(LocalContext provides LocalContext.current) {
+                        NavLayout(viewModel = habitViewModel)
+                    }
                 }
             }
         }

@@ -24,7 +24,7 @@ class Notification(private val context: Context) {
         const val date = "2023-11-25"
         const val time = "12:30 PM"
     }
-    fun showNotification(context: Context, intent: Intent) {
+    fun showNotification() {
         val activityIntent = Intent(context, MainActivity::class.java)
         val activityPendingIntent = PendingIntent.getActivity(
             context,
