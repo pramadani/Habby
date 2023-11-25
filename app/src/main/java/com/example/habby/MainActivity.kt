@@ -58,7 +58,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        setAlarm(this)
     }
 
     private fun createNotificationChannel() {
