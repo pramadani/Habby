@@ -1,8 +1,12 @@
 package com.example.habby
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +18,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.habby.model.getDatabase
@@ -21,6 +27,7 @@ import com.example.habby.navigation.NavLayout
 import com.example.habby.notification.Notification
 import com.example.habby.ui.theme.HabbyTheme
 import com.example.habby.viewmodel.HabitViewModel
+import java.util.Calendar
 
 
 @Suppress("UNCHECKED_CAST")
@@ -51,6 +58,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        setAlarm(this)
     }
 
     private fun createNotificationChannel() {
@@ -66,4 +74,32 @@ class MainActivity : ComponentActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
+    @SuppressLint("ServiceCast", "ScheduleExactAlarm")
+    fun setAlarm(context: Context) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmReceiver::class.java)
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    PendingIntent.FLAG_MUTABLE
+                } else {
+                    0
+                }
+            )
+
+        val calendar = Calendar.getInstance()
+        calendar.set(2023, Calendar.NOVEMBER, 25, 16, 43) // 1 Januari 2023, jam 8 malam
+
+        // Set alarm menggunakan AlarmManager
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
+    }
+
 }
