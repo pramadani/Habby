@@ -2,11 +2,8 @@ package com.example.habby.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
-import java.sql.Time
-import java.time.Duration
+import java.util.Date
 import java.util.UUID
-import java.util.concurrent.Delayed
 
 @Entity(
     tableName = "habits",
@@ -17,10 +14,10 @@ data class Habit(
     val name: String,
     val icon: String,
     val color: String,
-    val dateStart: Date,
-    val time: Time,
+    val dateStart: Long = Date().time,
+    val time: String,
     val habitDuration: Int,
-    val isEvent: Boolean,
-    val isCheck: Boolean,
-    val isDelayed: Boolean
+    val isEvent: Boolean = false,
+    var isCheck: Boolean = false,
+    val isDelayed: Boolean = false
 )

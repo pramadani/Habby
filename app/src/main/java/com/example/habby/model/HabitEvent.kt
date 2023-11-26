@@ -22,7 +22,7 @@ data class HabitEvent(
     @PrimaryKey
     val habitEventId: String = UUID.randomUUID().toString(),
     val habitId: String,
-    val dateTaken: Date,
-    val eventStartTime: Time,
-    var eventEndTime: Time?
+    val dateTaken: Long,
+    val eventStartTime: Long,
+    var eventEndTime: Long?
 )

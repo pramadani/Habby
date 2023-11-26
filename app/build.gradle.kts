@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.habby"
-        minSdk = 24
+        minSdk = 26
         //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 1

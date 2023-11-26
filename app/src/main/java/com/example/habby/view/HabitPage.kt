@@ -15,9 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.room.PrimaryKey
 import com.example.habby.model.Habit
 import com.example.habby.notification.Notification
 import com.example.habby.viewmodel.HabitViewModel
+import java.time.LocalTime
+import java.util.UUID
 
 @Composable
 fun HabitPage(viewModel: HabitViewModel) {
@@ -34,7 +37,13 @@ fun HabitPage(viewModel: HabitViewModel) {
         Button(
             onClick = {
                 viewModel.insertHabit(
-                    Habit(name = "New Habit", description = "", frequency = 0)
+                    Habit(
+                        name= "String",
+                        icon= "String",
+                        color= "String",
+                        time= LocalTime.of(1,1,1).toString(),
+                        habitDuration= 30,
+                    )
                 )
             }
         ) {
@@ -101,8 +110,8 @@ fun HabitList(
 fun HabitItem(habit: Habit) {
     Row {
         Column(modifier = Modifier.weight(1f)) {
+            Text(text = habit.habitId)
             Text(text = habit.name)
-            Text(text = habit.description)
         }
     }
 }

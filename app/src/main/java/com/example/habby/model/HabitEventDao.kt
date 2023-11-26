@@ -13,7 +13,7 @@ interface HabitEventDao {
     @Insert
     suspend fun insertHabitEvent(habitEvent: HabitEvent)
     @Query("SELECT * FROM habit_events WHERE habitId = :habitId ORDER BY dateTaken DESC LIMIT 1")
-    suspend fun getLatestHabitEventByHabitId(habitId: String): HabitEvent?
+    fun getLatestHabitEventByHabitId(habitId: String): HabitEvent?
     @Update
     suspend fun updateHabitEvent(habitEvent: HabitEvent)
 }
