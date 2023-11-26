@@ -171,7 +171,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
-            colors = CardDefaults.cardColors(Color.Gray),
+//            colors = CardDefaults.cardColors(Color.Gray),
             content = {
                 Row(
                     modifier = Modifier
@@ -188,7 +188,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                         modifier = Modifier.size(40.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+                    Spacer(modifier = Modifier.width(16.dp)) // Add some space between icon and text
 
                     Column {
                         Text(
@@ -241,7 +241,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
-            colors = CardDefaults.cardColors(Color.Gray),
+//            colors = CardDefaults.cardColors(Color.Gray),
             content = {
                 Row(
                     modifier = Modifier
@@ -255,10 +255,10 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                         painter = imagePainter,
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.size(36.dp)
+                        modifier = Modifier.size(32.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+                    Spacer(modifier = Modifier.width(24.dp)) // Add some space between icon and text
 
                     Column {
                         Text(
@@ -301,7 +301,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
-            colors = CardDefaults.cardColors(Color.Gray),
+//            colors = CardDefaults.cardColors(Color.Gray),
             content = {
                 Row(
                     modifier = Modifier
@@ -318,7 +318,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                         modifier = Modifier.size(36.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+                    Spacer(modifier = Modifier.width(20.dp)) // Add some space between icon and text
 
                     Column {
                         Text(
@@ -361,7 +361,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
-            colors = CardDefaults.cardColors(Color.Gray),
+//            colors = CardDefaults.cardColors(Color.Gray),
             content = {
                 Row(
                     modifier = Modifier
@@ -378,7 +378,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                         modifier = Modifier.size(36.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+                    Spacer(modifier = Modifier.width(20.dp)) // Add some space between icon and text
 
                     Column {
                         Text(
