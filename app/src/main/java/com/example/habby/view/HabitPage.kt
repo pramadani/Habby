@@ -64,7 +64,6 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
             Text(text = habit.isEvent.toString())
 
             var isChecked by remember { mutableStateOf(habit.isCheck) }
-//            var isEvent by remember { mutableStateOf(habit.isEvent) }
 
             RadioButton(
                 selected = isChecked,
@@ -79,11 +78,20 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
                 }
             )
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(
+                onClick = {
+                    isChecked = true
+                    viewModel.startHabitEvent(habit)
+                }
+            ) {
                 Text(text = "Start")
             }
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(
+                onClick = {
+                    viewModel.stopHabitEvent(habit)
+                }
+            ) {
                 Text(text = "Stop")
             }
         }

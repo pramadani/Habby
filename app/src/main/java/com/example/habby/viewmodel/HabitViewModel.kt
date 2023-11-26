@@ -80,6 +80,9 @@ class HabitViewModel(private val habitDao: HabitDao, private val habitEventDao: 
                 eventEndTime = null
             )
 
+            habit.isCheck = true
+            habitDao.updateHabit(habit)
+
             habitEventDao.insertHabitEvent(habitEvent)
         }
     }
