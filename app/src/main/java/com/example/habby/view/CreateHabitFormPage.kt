@@ -72,21 +72,35 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
         )
 
         val context = LocalContext.current
-        val message = "Habit Successfully Created"
+        val successMessage = "Habit Successfully Created"
+        val warningMessage = "Data is Not Valid"
 
         Button(
             onClick = {
-                val habit = Habit(
-                    name= habitName,
-                    icon= habitIcon,
-                    color= habitColor,
-                    time= LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(),0).toString(),
-                    habitDuration= habitDuration.toInt(),
-                    isEvent= isEvent
-                )
-                viewModel.insertHabit(habit)
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                navController.navigate("Habit")
+                if (
+                    habitName.isEmpty() &&
+                    habitIcon.isEmpty() &&
+                    habitColor.isEmpty() &&
+                    habitTimeHour.isEmpty() &&
+                    habitTimeMinute.isEmpty() &&
+                    habitDuration.isEmpty()
+                ) {
+                    Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    val habit = Habit(
+                        name = habitName,
+                        icon = habitIcon,
+                        color = habitColor,
+                        time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
+                            .toString(),
+                        habitDuration = habitDuration.toInt(),
+                        isEvent = isEvent
+                    )
+                    viewModel.insertHabit(habit)
+                    Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
+                    navController.navigate("Habit")
+                }
             }
         ) {
             Text("Create Habit")

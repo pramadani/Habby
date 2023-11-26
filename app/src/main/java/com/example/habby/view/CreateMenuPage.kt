@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -83,10 +85,10 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     navController.navigate("Habit")
                 },
                 modifier = Modifier
-                    .height(48.dp)
-                    .width(48.dp),
+                    .wrapContentSize(),
+                colors = ButtonDefaults.buttonColors(Color.Transparent)
             ) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null, tint = Color.White)
             }
 
             CenteredText(text = "Create a new Habit")

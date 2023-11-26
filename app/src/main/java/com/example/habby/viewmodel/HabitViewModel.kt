@@ -1,6 +1,5 @@
 package com.example.habby.viewmodel
 
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.habby.model.Habit
@@ -10,22 +9,25 @@ import com.example.habby.model.HabitEventDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.util.Date
 
-class HabitViewModel(private val dao: HabitDao) : ViewModel() {
+class HabitViewModel(private val habitDao: HabitDao, private val habitEventDao: HabitEventDao) : ViewModel() {
 
     private val _habitList = MutableStateFlow<List<Habit>>(emptyList())
     val habitList: StateFlow<List<Habit>> = _habitList
+
+//    private val _habitEventList = MutableStateFlow<List<Habit>>(emptyList())
+//    val habitEventList: StateFlow<List<Habit>> = _habitEventList
 
     private var selectedHabitID = ""
 
     init {
         viewModelScope.launch {
-            dao.getAllHabits()
+            habitDao.getAllHabits()
                 .collect { habits ->
                     _habitList.value = habits
                 }
+
         }
     }
 
@@ -35,61 +37,60 @@ class HabitViewModel(private val dao: HabitDao) : ViewModel() {
 
     fun insertHabit(habit: Habit) {
         viewModelScope.launch {
-            dao.insertHabit(habit)
+            habitDao.insertHabit(habit)
         }
     }
 
     fun getHabitById(habitId: String): Habit? {
-        return dao.getHabitById(habitId)
+        return habitDao.getHabitById(habitId)
     }
 
     fun updateHabit(habit: Habit) {
         viewModelScope.launch {
-            dao.updateHabit(habit)
+            habitDao.updateHabit(habit)
         }
     }
 
     fun deleteHabit(habit: Habit) {
         viewModelScope.launch {
-            dao.deleteHabit(habit)
+            habitDao.deleteHabit(habit)
         }
     }
 
     fun checkHabit(habit: Habit) {
         viewModelScope.launch {
             habit.isCheck = true
-            dao.updateHabit(habit)
+            habitDao.updateHabit(habit)
         }
     }
 
     fun unCheckHabit(habit: Habit) {
         viewModelScope.launch {
             habit.isCheck = false
-            dao.updateHabit(habit)
+            habitDao.updateHabit(habit)
         }
     }
 
-//    suspend fun startHabitEvent() {
-//        val habitEvent = HabitEvent(
-//            habitId = this.habitId,
-//            dateTaken = java.sql.Date(Date().time), // Tanggal saat ini
-//            eventStartTime = Time(Date().time), // Waktu saat ini
-//            eventEndTime = null // Waktu kosong untuk sekarang
-//        )
-//
-//        // Menambahkan habitEvent ke database menggunakan DAO
-//        habitEventDao.insertHabitEvent(habitEvent)
-//    }
-//    suspend fun stopHabitEvent() {
-//        // Mendapatkan habitEvent yang belum memiliki endTime terisi
-//        var habitEvent = habitEventDao.getLatestHabitEventByHabitId(this.habitId)
-//
-//        if (habitEvent != null) {
-//            // Mengupdate endTime habitEvent dengan waktu saat ini
-//            habitEvent.eventEndTime = Time(Date().time)
-//
-//            // Melakukan update habitEvent di database menggunakan DAO
-//            habitEventDao.updateHabitEvent(habitEvent)
-//        }
-//    }
+    fun startHabitEvent(habit: Habit) {
+        viewModelScope.launch {
+
+            val habitEvent = HabitEvent(
+                habitId = habit.habitId,
+                eventStartTime = Date().time,
+                eventEndTime = null
+            )
+
+            habitEventDao.insertHabitEvent(habitEvent)
+        }
+    }
+    fun stopHabitEvent(habit: Habit) {
+        viewModelScope.launch {
+
+            var habitEvent = habitEventDao.getLatestHabitEventByHabitId(habit.habitId)!!
+
+            habitEvent.eventEndTime = Date().time
+
+            habitEventDao.updateHabitEvent(habitEvent)
+        }
+    }
 }

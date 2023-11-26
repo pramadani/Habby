@@ -3,8 +3,6 @@ package com.example.habby.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.sql.Date
-import java.sql.Time
 import java.util.UUID
 
 @Entity(
@@ -22,7 +20,6 @@ data class HabitEvent(
     @PrimaryKey
     val habitEventId: String = UUID.randomUUID().toString(),
     val habitId: String,
-    val dateTaken: Long,
     val eventStartTime: Long,
     var eventEndTime: Long?
 )
