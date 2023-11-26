@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import androidx.room.PrimaryKey
 import com.example.habby.model.Habit
 import com.example.habby.notification.Notification
@@ -23,7 +25,7 @@ import java.time.LocalTime
 import java.util.UUID
 
 @Composable
-fun HabitPage(viewModel: HabitViewModel) {
+fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
 
     Column(
@@ -36,23 +38,24 @@ fun HabitPage(viewModel: HabitViewModel) {
     ) {
         Button(
             onClick = {
-                viewModel.insertHabit(
-                    Habit(
-                        name= "String",
-                        icon= "String",
-                        color= "String",
-                        time= LocalTime.of(1,1,1).toString(),
-                        habitDuration= 30,
-                    )
-                )
+//                viewModel.insertHabit(
+//                    Habit(
+//                        name= "String",
+//                        icon= "String",
+//                        color= "String",
+//                        time= LocalTime.of(1,1,1).toString(),
+//                        habitDuration= 30,
+//                    )
+//                )
+                navController.navigate("CreateMenuPage")
             }
         ) {
             Text("Add Habit")
         }
-        val service = Notification(LocalContext.current)
+//        val service = Notification(LocalContext.current)
 
-        Button(onClick = { service.showNotification() }) {
-            Text(text = "Show Notification")}
+//        Button(onClick = { service.showNotification() }) {
+//            Text(text = "Show Notification")}
 
         Column(
             modifier = Modifier
