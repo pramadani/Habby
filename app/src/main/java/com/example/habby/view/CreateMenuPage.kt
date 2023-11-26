@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,10 +37,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.habby.R
 import com.example.habby.model.Habit
 import com.example.habby.viewmodel.HabitViewModel
 import java.time.LocalTime
@@ -91,7 +95,12 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null, tint = Color.White)
             }
 
-            CenteredText(text = "Create a new Habit")
+            Text(
+                "Create a new Habit",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
         }
 
         Card(
@@ -100,20 +109,29 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             },
             modifier = Modifier
                 .padding(16.dp)
-                .height(80.dp) // Changed height to width for Column
+                .height(80.dp) // Changed height to width for Row
                 .background(
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
             colors = CardDefaults.cardColors(Color.Blue),
             content = {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Column
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Column
+                    horizontalArrangement = Arrangement.Center, // Center items horizontally in the Row
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
+                    Icon(
+                        imageVector = Icons.Default.Add, // Replace with the desired icon
+                        contentDescription = null, // Provide a content description if needed
+                        tint = Color.White, // Tint color of the icon
+                        modifier = Modifier.size(40.dp) // Set the size of the icon
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     Text(
                         "Create Your Own Habit",
                         fontSize = 18.sp,
@@ -123,6 +141,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 }
             }
         )
+
 
 
         CenteredText(text = "or choice from popular habit below")
@@ -147,29 +166,57 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             },
             modifier = Modifier
                 .padding(16.dp)
-                .height(80.dp) // Changed height to width for Column
+                .height(80.dp)
                 .background(
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
             colors = CardDefaults.cardColors(Color.Gray),
             content = {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Column
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Column
+//                    horizontalArrangement = Arrangement.Center, // Center items horizontally in the Row
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
-                    Text(
-                        "Money",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                    val imagePainter = painterResource(id = R.drawable.ic_money)
+                    Icon(
+                        painter = imagePainter,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(40.dp)
                     )
+
+                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+
+                    Column {
+                        Text(
+                            "Money",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            "Save your money for the future",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White
+                        )
+                    }
+
+//                    Text(
+//                        "Money\n" +
+//                                "Save your money for the future",
+//                        fontSize = 18.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.White
+//                    )
+
                 }
             }
         )
+
 
         Card(
             onClick = {
@@ -196,19 +243,37 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 ),
             colors = CardDefaults.cardColors(Color.Gray),
             content = {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Column
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Column
+//                    horizontalArrangement = Arrangement.Center, // Center items horizontally in the Row
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
-                    Text(
-                        "Exercise",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                    val imagePainter = painterResource(id = R.drawable.ic_exercise)
+                    Icon(
+                        painter = imagePainter,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(36.dp)
                     )
+
+                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+
+                    Column {
+                        Text(
+                            "Exercise",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            "Be Healthy",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         )
@@ -238,19 +303,37 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 ),
             colors = CardDefaults.cardColors(Color.Gray),
             content = {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Column
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Column
+//                    horizontalArrangement = Arrangement.Center, // Center items horizontally in the Row
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
-                    Text(
-                        "Sleep",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                    val imagePainter = painterResource(id = R.drawable.ic_sleep)
+                    Icon(
+                        painter = imagePainter,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(36.dp)
                     )
+
+                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+
+                    Column {
+                        Text(
+                            "Sleep",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            "Start at 23:00",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         )
@@ -280,19 +363,37 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 ),
             colors = CardDefaults.cardColors(Color.Gray),
             content = {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Column
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Column
+//                    horizontalArrangement = Arrangement.Center, // Center items horizontally in the Row
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
-                    Text(
-                        "Morning",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                    val imagePainter = painterResource(id = R.drawable.ic_morning)
+                    Icon(
+                        painter = imagePainter,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(36.dp)
                     )
+
+                    Spacer(modifier = Modifier.width(8.dp)) // Add some space between icon and text
+
+                    Column {
+                        Text(
+                            "Morning",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            "Start at 23:00",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         )
