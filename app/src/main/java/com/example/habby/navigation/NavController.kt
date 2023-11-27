@@ -21,7 +21,7 @@ fun NavController(navController: NavHostController, viewModel: HabitViewModel) {
             HabitPage(viewModel, navController)
         }
         composable(route = "Statistic"){
-            StatisticPage()
+            StatisticPage(viewModel, navController)
         }
         composable(route = "CreateMenuPage"){
             CreateMenuPage(viewModel, navController)

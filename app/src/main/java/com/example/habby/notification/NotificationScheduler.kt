@@ -151,7 +151,7 @@ fun setAlarm(context: Context, selectedDays: String, notificationTime: LocalTime
     val dayOfWeek = selectedDayList.map { parseDayOfWeek(it) }.toIntArray()
 
     // Set interval waktu untuk pengulangan alarm setiap minggu
-    val intervalMillis = 7 * 24 * 60 * 60 * 1000L  // 7 hari dalam milidetik
+    val intervalMillis = 24 * 60 * 60 * 1000L  // 7 hari dalam milidetik
 
     // Set alarm menggunakan AlarmManager dengan metode setRepeating
     for (day in dayOfWeek) {
