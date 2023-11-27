@@ -110,16 +110,18 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
 
         var currentStreak = 0
         var maxStreak = 0
+        var currentHabitId: String? = null
 
         // Loop melalui habit progress list
         for (progress in habitProgressList.value) {
-            if (progress.progress) {
-                // Jika progress true, tambahkan ke streak saat ini
+            if (progress.progress && progress.habitId == currentHabitId) {
+                // Jika progress true dan habitId sama, tambahkan ke streak saat ini
                 currentStreak++
             } else {
-                // Jika progress false, reset streak saat ini
+                // Jika progress false atau habitId berbeda, reset streak saat ini
                 maxStreak = maxOf(maxStreak, currentStreak)
-                currentStreak = 0
+                currentStreak = if (progress.progress) 1 else 0
+                currentHabitId = progress.habitId
             }
         }
 
@@ -127,28 +129,34 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
         return maxOf(maxStreak, currentStreak)
     }
 
+
     fun getStatisticCurrentAllStreak(): Int {
         // Memastikan habitProgressList tidak kosong
         if (habitProgressList.value.isEmpty()) return 0
 
         var currentStreak = 0
+        var currentHabitId: String? = null
 
         // Loop melalui habit progress list dari belakang
         for (i in habitProgressList.value.size - 1 downTo 0) {
             val progress = habitProgressList.value[i]
 
-            if (progress.progress) {
-                // Jika progress true, tambahkan ke current streak
+            if (progress.progress && (currentHabitId == null || progress.habitId == currentHabitId)) {
+                // Jika progress true dan habitId sama atau currentHabitId belum diatur, tambahkan ke current streak
                 currentStreak++
             } else if (currentStreak > 0) {
                 // Jika progress false dan current streak sudah dimulai, hentikan loop
                 break
             }
+
+            currentHabitId = progress.habitId
         }
 
         // Mengembalikan current streak
         return currentStreak
     }
+
+
 
     fun getHabitEventByHabitId(habitId: String): HabitEvent? {
         return habitEventList.value.firstOrNull { it.habitId == habitId }
