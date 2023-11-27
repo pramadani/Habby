@@ -237,7 +237,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                             buttonColor2 = true
                                         }
                                         else {
-                                            habitColor = "Blue"
+                                            habitColor = "Green"
                                             buttonColor1 = false
                                             buttonColor2 = true
                                             buttonColor3 = false
@@ -579,7 +579,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                             buttonColor3 = true
                                         }
                                         else {
-                                            habitIcon = "Money"
+                                            habitIcon = "Sleep"
                                             buttonColor1 = false
                                             buttonColor2 = false
                                             buttonColor3 = true
