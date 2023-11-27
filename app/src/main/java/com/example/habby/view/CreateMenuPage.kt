@@ -60,21 +60,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
 //        Text("Create Your Own Habit")
 //    }
 
-    @Composable
-    fun CenteredText(text: String) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = text)
-        }
-    }
-
     Column (
-        modifier = Modifier.fillMaxSize()
-            .background(Color(0xFF363C4A)),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -161,8 +148,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             onClick = {
                 val habit = Habit(
                     name= "Money",
-                    icon= "habitIcon",
-                    color= "habitColor",
+                    icon= "Money",
+                    color= "Red",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
@@ -233,8 +220,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             onClick = {
                 val habit = Habit(
                     name= "Exercise",
-                    icon= "habitIcon",
-                    color= "habitColor",
+                    icon= "Exercise",
+                    color= "Blue",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
@@ -294,8 +281,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             onClick = {
                 val habit = Habit(
                     name= "Sleep",
-                    icon= "habitIcon",
-                    color= "habitColor",
+                    icon= "Sleep",
+                    color= "Green",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
@@ -355,8 +342,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
             onClick = {
                 val habit = Habit(
                     name= "Morning",
-                    icon= "habitIcon",
-                    color= "habitColor",
+                    icon= "Morning",
+                    color= "Magenta",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
