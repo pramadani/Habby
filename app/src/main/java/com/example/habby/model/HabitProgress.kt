@@ -7,7 +7,7 @@ import java.util.Date
 import java.util.UUID
 
 @Entity(
-    tableName = "habit_events",
+    tableName = "habit_progress",
     foreignKeys = [
         ForeignKey(
             entity = Habit::class,
@@ -17,10 +17,10 @@ import java.util.UUID
         )
     ]
 )
-data class HabitEvent(
+data class HabitProgress(
     @PrimaryKey
-    val habitEventId: String = UUID.randomUUID().toString(),
+    val habitProgressId: String = UUID.randomUUID().toString(),
     val habitId: String,
-    val eventStartTime: Long = Date().time,
-    var eventEndTime: Long? = null
+    val dateTaken: Long = Date().time,
+    var progress: Boolean = false
 )

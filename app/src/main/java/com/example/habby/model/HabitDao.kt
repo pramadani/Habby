@@ -11,15 +11,13 @@ import kotlinx.coroutines.flow.Flow
 interface HabitDao {
     @Query("SELECT * FROM habits")
     fun getAllHabits(): Flow<List<Habit>>
-
     @Insert
     suspend fun insertHabit(habit: Habit)
-
     @Update
     suspend fun updateHabit(habit: Habit)
-
     @Delete
     suspend fun deleteHabit(habit: Habit)
+
 
     @Query("SELECT * FROM habit_events")
     fun getAllHabitEvents(): Flow<List<HabitEvent>>
@@ -29,4 +27,12 @@ interface HabitDao {
     suspend fun getLatestHabitEventByHabitId(habitId: String): HabitEvent
     @Update
     suspend fun updateHabitEvent(habitEvent: HabitEvent)
+
+
+    @Query("SELECT * FROM habits")
+    fun getAllHabitProgress(): Flow<List<HabitProgress>>
+    @Insert
+    suspend fun insertHabitProgress(habitProgress: HabitProgress)
+    @Update
+    suspend fun updateHabitProgress(habitProgress: HabitProgress)
 }
