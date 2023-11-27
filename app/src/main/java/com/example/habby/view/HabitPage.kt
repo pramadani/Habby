@@ -133,6 +133,11 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
             .wrapContentSize()
     ) {
 
+        var color = if (habit.color == "Blue") Color.Blue else if (habit.color == "Green") Color.Green else if (habit.color == "Yellow") Color.Yellow else if (habit.color == "Magenta") Color.Magenta else Color.Red
+
+        var icon = if (habit.icon == "Money") painterResource(id = R.drawable.ic_money) else if (habit.icon == "Exercise") painterResource(id = R.drawable.ic_exercise) else if (habit.icon == "Sleep") painterResource(id = R.drawable.ic_sleep) else if (habit.icon == "Morning") painterResource(id = R.drawable.ic_morning) else painterResource(id = R.drawable.ic_book)
+
+
         Card( onClick = {
             viewModel.setSelectedHabit(habit)
             navController.navigate("EditHabitFormPage")
@@ -141,10 +146,10 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
                 .padding(16.dp)
                 .height(80.dp)
                 .background(
-                    color = Color.Blue,
+                    color = color,
                     shape = RoundedCornerShape(16.dp),
                 ),
-            colors = CardDefaults.cardColors(Color.Blue),
+            colors = CardDefaults.cardColors(color),
             content = {
 
                 Row(
@@ -160,15 +165,16 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
                     var isStart by remember { mutableStateOf(false) }
                     var isStopped by remember { mutableStateOf(isEventEndTime) }
 
-                    Text(
-                        habit.icon,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                    Icon(
+                        painter = icon, // Assuming habit.icon is an ImageVector
+                        contentDescription = null, // Provide content description if needed
+                        tint = Color.White,
                         modifier = Modifier
-                            .width(50.dp) // Set the width to 50 dp
-                            .align(Alignment.CenterVertically) // Align the habit icon to the center vertically
+                            .width(50.dp)
+                            .size(32.dp)
+                            .align(Alignment.CenterVertically),
                     )
+
 
                     // Text for habit.name (aligned to the left)
                     Column {
