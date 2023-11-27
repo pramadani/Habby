@@ -102,7 +102,7 @@ fun setAlarm(context: Context, selectedDays: String, notificationTimeInMillis: L
     val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
         set(Calendar.HOUR_OF_DAY, 17)
-        set(Calendar.MINUTE, 8)
+        set(Calendar.MINUTE, 59)
         set(Calendar.SECOND, 0)
     }
 

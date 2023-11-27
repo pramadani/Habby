@@ -791,6 +791,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     isEvent = isEvent
                                 )
                                 viewModel.insertHabit(habit)
+                                viewModel.scheduleNotification(context, "asdqsa", 12)
                                 Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
                                 navController.navigate("Habit")
                             }
