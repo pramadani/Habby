@@ -240,18 +240,315 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                             )
 //                    Spacer(modifier = Modifier.width(8.dp))
 
-                            OutlinedTextField(
-                                value = habitInterval,
-                                onValueChange = { habitInterval = it },
+                            Row(
                                 modifier = Modifier
                                     .padding(16.dp)
                                     .fillMaxSize(),
-                                textStyle = TextStyle(
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                
+                                var buttonColor1 by remember { mutableStateOf(false) }
+                                var buttonColor2 by remember { mutableStateOf(false) }
+                                var buttonColor3 by remember { mutableStateOf(false) }
+                                var buttonColor4 by remember { mutableStateOf(false) }
+                                var buttonColor5 by remember { mutableStateOf(false) }
+                                var buttonColor6 by remember { mutableStateOf(false) }
+                                var buttonColor7 by remember { mutableStateOf(false) }
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor1 == false) {
+                                            habitInterval += "-SUN"
+                                            buttonColor1 = true
+                                        }
+                                        else if (buttonColor1 == true) {
+                                            habitInterval = habitInterval.replace("-SUN", "");
+                                            buttonColor1 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor1 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor1 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "S",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
                                 )
-                            )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor2 == false) {
+                                            habitInterval += "-MON"
+                                            buttonColor2 = true
+                                        }
+                                        else if (buttonColor2 == true) {
+                                            habitInterval = habitInterval.replace("-MON", "");
+                                            buttonColor2 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor2 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor2 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "M",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor3 == false) {
+                                            habitInterval += "-TUE"
+                                            buttonColor3 = true
+                                        }
+                                        else if (buttonColor3 == true) {
+                                            habitInterval = habitInterval.replace("-TUE", "");
+                                            buttonColor3 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor3 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor3 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "T",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor4 == false) {
+                                            habitInterval += "-WED"
+                                            buttonColor4 = true
+                                        }
+                                        else if (buttonColor4 == true) {
+                                            habitInterval = habitInterval.replace("-WED", "");
+                                            buttonColor4 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor4 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor4 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "W",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor5 == false) {
+                                            habitInterval += "-THU"
+                                            buttonColor5 = true
+                                        }
+                                        else if (buttonColor5 == true) {
+                                            habitInterval = habitInterval.replace("-THU", "");
+                                            buttonColor5 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor5 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor5 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "T",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor6 == false) {
+                                            habitInterval += "-FRI"
+                                            buttonColor6 = true
+                                        }
+                                        else if (buttonColor6 == true) {
+                                            habitInterval = habitInterval.replace("-FRI", "");
+                                            buttonColor6 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor6 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor6 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "F",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (buttonColor7 == false) {
+                                            habitInterval += "-SAT"
+                                            buttonColor7 = true
+                                        }
+                                        else if (buttonColor7 == true) {
+                                            habitInterval = habitInterval.replace("-SAT", "");
+                                            buttonColor7 = false
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor7 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor7 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "S",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                )
+
+                            }
+
+
+//                            OutlinedTextField(
+//                                value = habitInterval,
+//                                onValueChange = { habitInterval = it },
+//                                modifier = Modifier
+//                                    .padding(16.dp)
+//                                    .fillMaxSize(),
+//                                textStyle = TextStyle(
+//                                    color = Color.White,
+//                                    fontWeight = FontWeight.Bold,
+//                                    fontSize = 18.sp
+//                                )
+//                            )
 
                         }
                     }
@@ -460,7 +757,9 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
 
                 val context = LocalContext.current
                 val successMessage = "Habit Successfully Created"
+//                val successMessage = habitInterval
                 val warningMessage = "Data is Not Valid"
+
 
                 Button(
                     onClick = {
@@ -478,7 +777,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                 name = habitName,
                                 icon = habitIcon,
                                 color = habitColor,
-                                interval = habitInterval,
+                                interval = habitInterval.substring(1),
                                 time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
                                     .toString(),
                                 habitDuration = habitDuration.toInt(),
