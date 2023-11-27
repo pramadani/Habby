@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
 
@@ -22,6 +23,132 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
     val habitProgressList = habitDao.getAllHabitProgress().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     private lateinit var selectedHabit: Habit
+
+    fun getStatisticAllAverageDuration(): Int {
+        // Menghitung total durasi menggunakan fungsi yang sudah dibuat sebelumnya
+        val totalDurationInHours = getStatisticAllTotalDuration()
+
+        // Menghitung jumlah habit
+        val totalHabits = habitList.value.size
+
+        // Menghitung rata-rata durasi
+        return if (totalHabits > 0) {
+            totalDurationInHours / totalHabits
+        } else {
+            0
+        }
+    }
+    fun getStatisticAllTotalDuration(): Int {
+        // Menginisialisasi total durasi
+        var totalDurationInMinutes = 0
+
+        // Membuat map untuk mengelompokkan habitEvent berdasarkan habitId
+        val habitEventMap = habitEventList.value.groupBy { it.habitId }
+
+        // Membuat map untuk mengelompokkan habitProgress berdasarkan habitId
+        val habitProgressMap = habitProgressList.value.groupBy { it.habitId }
+
+        // Loop melalui habitList untuk menghitung total durasi
+        for (habit in habitList.value) {
+            val habitId = habit.habitId
+
+            // Menghitung durasi dari habitEvent dengan habitId yang sama
+            val habitEventDurationInMinutes = habitEventMap[habitId]?.sumBy {
+                val endTime = it.eventEndTime
+                val startTime = it.eventStartTime
+
+                if (endTime != null && startTime != null) {
+                    TimeUnit.MILLISECONDS.toMinutes(endTime - startTime).toInt()
+                } else {
+                    0
+                }
+            } ?: 0
+
+            // Menghitung jumlah habit progress dan habit event yang mempunyai habitId yang sama
+            val habitProgressCount = habitProgressMap[habitId]?.size ?: 0
+            val habitEventCount = habitEventMap[habitId]?.size ?: 0
+
+            // Jika jumlah habit progress lebih banyak dari jumlah habit event, kurangkan
+            val adjustedProgressCount = habitProgressCount - habitEventCount
+
+            // Menambahkan durasi dari habitEvent dan adjusted progress ke total durasi (dalam menit)
+            totalDurationInMinutes += adjustedProgressCount * habit.habitDuration + habitEventDurationInMinutes
+        }
+
+        // Mengonversi total durasi dari menit ke jam
+        val totalDurationInHours = TimeUnit.MINUTES.toHours(totalDurationInMinutes.toLong()).toInt()
+
+        return totalDurationInHours
+    }
+
+    fun getStatisticAllEveryProgress(): Int {
+        // Mengembalikan jumlah total habit progress
+        return habitProgressList.value.size
+    }
+
+    fun getStatisticAllTrueProgress(): Int {
+        // Menghitung jumlah habit progress yang bernilai true
+        return habitProgressList.value.count { it.progress }
+    }
+
+    fun getStatisticAllPercentage(): Int {
+        // Menghitung persentase habit progress yang bernilai true
+        val totalProgress = getStatisticAllEveryProgress()
+        val trueProgress = getStatisticAllTrueProgress()
+
+        // Menghindari pembagian oleh nol
+        return if (totalProgress > 0) {
+            (trueProgress * 100) / totalProgress
+        } else {
+            0
+        }
+    }
+
+    fun getStatisticAllStreak(): Int {
+        // Memastikan habitProgressList tidak kosong
+        if (habitProgressList.value.isEmpty()) return 0
+
+        var currentStreak = 0
+        var maxStreak = 0
+
+        // Loop melalui habit progress list
+        for (progress in habitProgressList.value) {
+            if (progress.progress) {
+                // Jika progress true, tambahkan ke streak saat ini
+                currentStreak++
+            } else {
+                // Jika progress false, reset streak saat ini
+                maxStreak = maxOf(maxStreak, currentStreak)
+                currentStreak = 0
+            }
+        }
+
+        // Mengembalikan streak tertinggi
+        return maxOf(maxStreak, currentStreak)
+    }
+
+    fun getStatisticCurrentAllStreak(): Int {
+        // Memastikan habitProgressList tidak kosong
+        if (habitProgressList.value.isEmpty()) return 0
+
+        var currentStreak = 0
+
+        // Loop melalui habit progress list dari belakang
+        for (i in habitProgressList.value.size - 1 downTo 0) {
+            val progress = habitProgressList.value[i]
+
+            if (progress.progress) {
+                // Jika progress true, tambahkan ke current streak
+                currentStreak++
+            } else if (currentStreak > 0) {
+                // Jika progress false dan current streak sudah dimulai, hentikan loop
+                break
+            }
+        }
+
+        // Mengembalikan current streak
+        return currentStreak
+    }
 
     fun getHabitEventByHabitId(habitId: String): HabitEvent? {
         return habitEventList.value.firstOrNull { it.habitId == habitId }
