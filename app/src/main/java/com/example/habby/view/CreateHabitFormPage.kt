@@ -332,6 +332,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                             )
                                         }
                                     }
+                                        //
                                 )
 
                                 Spacer(modifier = Modifier.width(16.dp))
