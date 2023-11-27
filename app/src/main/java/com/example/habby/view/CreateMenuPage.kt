@@ -61,7 +61,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
 //    }
 
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
