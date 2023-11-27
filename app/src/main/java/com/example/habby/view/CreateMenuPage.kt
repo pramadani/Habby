@@ -162,7 +162,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                 val message = "Habit Money Successfully Created"
 
                 viewModel.insertHabit(habit)
-                viewModel.scheduleNotification(context, habit.interval, habit.time.toLong())
+                viewModel.scheduleNotification(context, habit.interval, LocalTime.of("1".toInt(), "1".toInt(),0))
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 navController.navigate("Habit")
             },

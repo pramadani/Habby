@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import java.time.LocalTime
 import java.util.Calendar
 import java.util.Locale
 
@@ -83,7 +84,47 @@ import java.util.Locale
 //
 //}
 
-fun setAlarm(context: Context, selectedDays: String, notificationTimeInMillis: Long) {
+//fun setAlarm(context: Context, selectedDays: String, notificationTimeInMillis: Long) {
+//    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//    val intent = Intent(context, AlarmReceiver::class.java)
+//    val pendingIntent =
+//        PendingIntent.getBroadcast(
+//            context,
+//            0,
+//            intent,
+//            PendingIntent.FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//                PendingIntent.FLAG_MUTABLE
+//            } else {
+//                0
+//            }
+//        )
+//
+//    // Atur waktu alarm pada pukul 17:05
+//    val calendar = Calendar.getInstance().apply {
+//        timeInMillis = System.currentTimeMillis()
+//        set(Calendar.HOUR_OF_DAY, 18)
+//        set(Calendar.MINUTE, 12)
+//        set(Calendar.SECOND, 0)
+//    }
+//
+//    // Pastikan waktu yang diatur belum lewat, jika iya, tambahkan satu hari
+//    if (calendar.before(Calendar.getInstance())) {
+//        calendar.add(Calendar.DAY_OF_MONTH, 1)
+//    }
+//
+//    // Interval waktu untuk pengulangan alarm setiap hari
+//    val intervalMillis = 7 * 24 * 60 * 60 * 1000L  // 24 jam dalam milidetik
+//
+//    // Set alarm menggunakan AlarmManager dengan metode setRepeating
+//    alarmManager.setRepeating(
+//        AlarmManager.RTC_WAKEUP,
+//        calendar.timeInMillis,
+//        intervalMillis,
+//        pendingIntent
+//    )
+//}
+
+fun setAlarm(context: Context, selectedDays: String, notificationTime: LocalTime) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val intent = Intent(context, AlarmReceiver::class.java)
     val pendingIntent =
@@ -98,40 +139,60 @@ fun setAlarm(context: Context, selectedDays: String, notificationTimeInMillis: L
             }
         )
 
-    // Atur waktu alarm pada pukul 17:05
+    // Atur waktu alarm sesuai dengan LocalTime
     val calendar = Calendar.getInstance().apply {
-        timeInMillis = System.currentTimeMillis()
-        set(Calendar.HOUR_OF_DAY, 17)
-        set(Calendar.MINUTE, 59)
+        set(Calendar.HOUR_OF_DAY, notificationTime.hour)
+        set(Calendar.MINUTE, notificationTime.minute)
         set(Calendar.SECOND, 0)
     }
 
-    // Pastikan waktu yang diatur belum lewat, jika iya, tambahkan satu hari
-    if (calendar.before(Calendar.getInstance())) {
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-    }
+    // Set hari alarm berulang
+    val selectedDayList = selectedDays.split("-").filter { it.isNotBlank() }
+    val dayOfWeek = selectedDayList.map { parseDayOfWeek(it) }.toIntArray()
 
-    // Interval waktu untuk pengulangan alarm setiap hari
-    val intervalMillis = 24 * 60 * 60 * 1000L  // 24 jam dalam milidetik
+    // Set interval waktu untuk pengulangan alarm setiap minggu
+    val intervalMillis = 7 * 24 * 60 * 60 * 1000L  // 7 hari dalam milidetik
 
     // Set alarm menggunakan AlarmManager dengan metode setRepeating
-    alarmManager.setRepeating(
-        AlarmManager.RTC_WAKEUP,
-        calendar.timeInMillis,
-        intervalMillis,
-        pendingIntent
-    )
+    for (day in dayOfWeek) {
+//        val nextAlarmTime = getNextAlarmTime(calendar, day)
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            intervalMillis,
+            pendingIntent
+        )
+    }
+}
+
+fun getNextAlarmTime(calendar: Calendar, selectedDay: Int): Long {
+    calendar.set(Calendar.DAY_OF_WEEK, selectedDay)
+
+    // Jika waktu alarm sudah lewat untuk hari yang dipilih, tambahkan 7 hari (minggu berikutnya)
+    if (calendar.timeInMillis < System.currentTimeMillis()) {
+        calendar.add(Calendar.DAY_OF_MONTH, 7)
+    }
+
+    // Atur waktu sesuai jam dan menit yang ditentukan pada notificationTimeInMillis
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+    calendar.timeInMillis = System.currentTimeMillis()
+    calendar.set(Calendar.HOUR_OF_DAY, hour)
+    calendar.set(Calendar.MINUTE, minute)
+    calendar.set(Calendar.SECOND, 0)
+
+    return calendar.timeInMillis
 }
 
 fun parseDayOfWeek(day: String): Int {
     return when (day.uppercase(Locale.ROOT)) {
+        "SUN" -> Calendar.SUNDAY
         "MON" -> Calendar.MONDAY
         "TUE" -> Calendar.TUESDAY
         "WED" -> Calendar.WEDNESDAY
         "THU" -> Calendar.THURSDAY
         "FRI" -> Calendar.FRIDAY
         "SAT" -> Calendar.SATURDAY
-        "SUN" -> Calendar.SUNDAY
         else -> throw IllegalArgumentException("Invalid day of week: $day")
     }
 }

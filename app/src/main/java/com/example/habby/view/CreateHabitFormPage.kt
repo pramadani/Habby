@@ -50,7 +50,10 @@ import androidx.navigation.NavHostController
 import com.example.habby.R
 import com.example.habby.model.Habit
 import com.example.habby.viewmodel.HabitViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -791,7 +794,9 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     isEvent = isEvent
                                 )
                                 viewModel.insertHabit(habit)
-                                viewModel.scheduleNotification(context, "asdqsa", 12)
+                                val notificationTime = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt())
+
+                                viewModel.scheduleNotification(context, habitInterval, notificationTime)
                                 Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
                                 navController.navigate("Habit")
                             }

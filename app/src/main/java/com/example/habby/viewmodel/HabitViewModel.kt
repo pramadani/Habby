@@ -12,6 +12,7 @@ import com.example.habby.model.HabitProgress
 import com.example.habby.notification.setAlarm
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 import java.util.Date
 
 class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
@@ -32,7 +33,7 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
         }
     }
 
-    fun scheduleNotification(context: Context, interval: String, Time: Long) {
+    fun scheduleNotification(context: Context, interval: String, Time: LocalTime) {
         setAlarm(context, interval, Time)
         Log.d("te", "testttt546")
     }
