@@ -1,6 +1,7 @@
 package com.example.habby.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,8 +32,9 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
         }
     }
 
-    fun scheduleNotification(context: Context) {
-        setAlarm(context)
+    fun scheduleNotification(context: Context, interval: String, Time: Long) {
+        setAlarm(context, interval, Time)
+        Log.d("te", "testttt546")
     }
 
     fun updateHabit(habit: Habit) {
