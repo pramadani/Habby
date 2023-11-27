@@ -45,7 +45,7 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
         return selectedHabit
     }
 
-
+//
     fun checkHabit(habit: Habit) {
         viewModelScope.launch {
             habit.isCheck = true
