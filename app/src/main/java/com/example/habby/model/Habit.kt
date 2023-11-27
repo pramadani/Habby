@@ -14,6 +14,7 @@ data class Habit(
     var name: String,
     var icon: String,
     var color: String,
+    var interval: String,
     val dateStart: Long = Date().time,
     var time: String,
     var habitDuration: Int,

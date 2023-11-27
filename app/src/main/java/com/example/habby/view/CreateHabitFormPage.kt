@@ -61,6 +61,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
     var habitTimeMinute by remember { mutableStateOf("") }
     var habitDuration by remember { mutableStateOf("") }
     var isEvent by remember { mutableStateOf(false) }
+    var habitInterval by remember { mutableStateOf("") }
 
     Column{
 //        OutlinedTextField(
@@ -210,7 +211,48 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
             )
         }
 
+        Card(
+            modifier = Modifier
+                .padding(16.dp)
+                .height(115.dp)
+                .background(
+                    color = Color.Blue,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            content = {
+                Column(
+                    modifier = Modifier
+                        .padding(0.dp),
+//                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
+                    verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                ) {
+                    Text(
+                        "Habit Interval",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, top = 10.dp)
+                    )
+//                    Spacer(modifier = Modifier.width(8.dp))
 
+                    OutlinedTextField(
+                        value = habitInterval,
+                        onValueChange = { habitInterval = it },
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxSize(),
+                        textStyle = TextStyle(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    )
+
+                }
+            }
+        )
 
 //        OutlinedTextField(
 //            value = habitIcon,
@@ -433,6 +475,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                         name = habitName,
                         icon = habitIcon,
                         color = habitColor,
+                        interval = habitInterval,
                         time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
                             .toString(),
                         habitDuration = habitDuration.toInt(),

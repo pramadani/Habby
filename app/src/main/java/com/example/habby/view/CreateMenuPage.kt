@@ -156,11 +156,13 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color= "habitColor",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
+                    interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
                 val message = "Habit Money Successfully Created"
 
                 viewModel.insertHabit(habit)
+                viewModel.scheduleNotification(context)
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 navController.navigate("Habit")
             },
@@ -226,6 +228,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color= "habitColor",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
+                    interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
                 val message = "Habit Exercise Successfully Created"
@@ -286,6 +289,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color= "habitColor",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
+                    interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
                 val message = "Habit Sleep Successfully Created"
@@ -346,6 +350,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color= "habitColor",
                     time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
                     habitDuration= "1".toInt(),
+                    interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
                 val message = "Habit Morning Successfully Created"

@@ -1,11 +1,14 @@
 package com.example.habby.viewmodel
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.habby.model.Habit
 import com.example.habby.model.HabitDao
 import com.example.habby.model.HabitEvent
 import com.example.habby.model.HabitProgress
+import com.example.habby.notification.setAlarm
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -27,6 +30,11 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
             insertHabitProgress(habit)
         }
     }
+
+    fun scheduleNotification(context: Context) {
+        setAlarm(context)
+    }
+
     fun updateHabit(habit: Habit) {
         viewModelScope.launch {
             habitDao.updateHabit(habit)
