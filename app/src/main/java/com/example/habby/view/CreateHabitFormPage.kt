@@ -739,7 +739,8 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                 "Set Habit time taken event",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = Color.White,
+                                textAlign = TextAlign.Center
                             )
 
                             Checkbox(
@@ -760,44 +761,49 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
 //                val successMessage = habitInterval
                 val warningMessage = "Data is Not Valid"
 
-
-                Button(
-                    onClick = {
-                        if (
-                            habitName.isEmpty() ||
-                            habitIcon.isEmpty() ||
-                            habitColor.isEmpty() ||
-                            habitTimeHour.isEmpty() ||
-                            habitTimeMinute.isEmpty() ||
-                            habitDuration.isEmpty()
-                        ) {
-                            Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()
-                        } else {
-                            val habit = Habit(
-                                name = habitName,
-                                icon = habitIcon,
-                                color = habitColor,
-                                interval = habitInterval.substring(1),
-                                time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
-                                    .toString(),
-                                habitDuration = habitDuration.toInt(),
-                                isEvent = isEvent
-                            )
-                            viewModel.insertHabit(habit)
-                            Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
-                            navController.navigate("Habit")
-                        }
-                    },
+                Row(
                     modifier = Modifier
-                        .wrapContentSize()  // Make the button take the full width
-                        .padding(16.dp)      // Add padding for spacing
-                        .align(Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.buttonColors(Color.Green)  // Set the button color to green
-                )
-                {
-                    Text("Create Habit")
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically // Align vertically centered
+                ) {
+                    Button(
+                        onClick = {
+                            if (
+                                habitName.isEmpty() ||
+                                habitIcon.isEmpty() ||
+                                habitColor.isEmpty() ||
+                                habitTimeHour.isEmpty() ||
+                                habitTimeMinute.isEmpty() ||
+                                habitDuration.isEmpty()
+                            ) {
+                                Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()
+                            } else {
+                                val habit = Habit(
+                                    name = habitName,
+                                    icon = habitIcon,
+                                    color = habitColor,
+                                    interval = habitInterval.substring(1),
+                                    time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
+                                        .toString(),
+                                    habitDuration = habitDuration.toInt(),
+                                    isEvent = isEvent
+                                )
+                                viewModel.insertHabit(habit)
+                                Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
+                                navController.navigate("Habit")
+                            }
+                        },
+                        modifier = Modifier
+                            .wrapContentSize()  // Make the button take the full width
+                            .padding(16.dp),      // Add padding for spacing
+                        colors = ButtonDefaults.buttonColors(Color.Green)  // Set the button color to green
+                    )
+                    {
+                        Text("Create Habit")
+                    }
                 }
-            }
+                }
 
         })
 
