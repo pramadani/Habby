@@ -27,12 +27,14 @@ interface HabitDao {
     suspend fun getLatestHabitEventByHabitId(habitId: String): HabitEvent
     @Update
     suspend fun updateHabitEvent(habitEvent: HabitEvent)
-//
+
 
     @Query("SELECT * FROM habit_progress")
     fun getAllHabitProgress(): Flow<List<HabitProgress>>
     @Insert
     suspend fun insertHabitProgress(habitProgress: HabitProgress)
+    @Query("SELECT * FROM habit_progress WHERE habitId = :habitId ORDER BY dateTaken DESC LIMIT 1")
+    suspend fun getLatestHabitProgressByHabitId(habitId: String): HabitProgress
     @Update
     suspend fun updateHabitProgress(habitProgress: HabitProgress)
 }

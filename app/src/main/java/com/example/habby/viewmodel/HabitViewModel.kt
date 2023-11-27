@@ -12,9 +12,9 @@ import java.util.Date
 
 class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
 
-    val habitList = habitDao.getAllHabits().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    val habitEventList = habitDao.getAllHabitEvents().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    val habitProgressList = habitDao.getAllHabitProgress().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    val habitList = habitDao.getAllHabits().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val habitEventList = habitDao.getAllHabitEvents().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val habitProgressList = habitDao.getAllHabitProgress().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     private lateinit var selectedHabit: Habit
 
@@ -24,6 +24,7 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
     fun insertHabit(habit: Habit) {
         viewModelScope.launch {
             habitDao.insertHabit(habit)
+            insertHabitProgress(habit)
         }
     }
     fun updateHabit(habit: Habit) {
@@ -49,12 +50,14 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
     fun checkHabit(habit: Habit) {
         viewModelScope.launch {
             habit.isCheck = true
+            updateHabitProgress(habit)
             habitDao.updateHabit(habit)
         }
     }
     fun unCheckHabit(habit: Habit) {
         viewModelScope.launch {
             habit.isCheck = false
+            updateHabitProgress(habit)
             habitDao.updateHabit(habit)
         }
     }
@@ -64,8 +67,7 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
             val habitEvent = HabitEvent(
                 habitId = habit.habitId
             )
-            habit.isCheck = true
-            habitDao.updateHabit(habit)
+            checkHabit(habit)
             habitDao.insertHabitEvent(habitEvent)
         }
     }
@@ -76,7 +78,6 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
             habitDao.updateHabitEvent(habitEvent)
         }
     }
-
 
     fun insertHabitProgress(habit: Habit) {
         viewModelScope.launch {
@@ -89,10 +90,9 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
 
     fun updateHabitProgress(habit: Habit) {
         viewModelScope.launch {
-            val habitProgress = HabitProgress(
-                habitId = habit.habitId
-            )
-            habitDao.insertHabitProgress(habitProgress)
+            val habitProgress = habitDao.getLatestHabitProgressByHabitId(habit.habitId)
+            habitProgress.progress = habit.isCheck
+            habitDao.updateHabitProgress(habitProgress)
         }
     }
 }

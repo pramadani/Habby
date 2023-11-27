@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.habby.view.CreateHabitFormPage
 import com.example.habby.view.CreateMenuPage
+import com.example.habby.view.EditHabitFormPage
 import com.example.habby.view.HabitPage
 import com.example.habby.view.StatisticPage
 import com.example.habby.view.TaskPage
@@ -32,6 +33,10 @@ fun NavController(navController: NavHostController, viewModel: HabitViewModel) {
         composable(route = "CreateHabitFormPage"){
             CreateHabitFormPage(viewModel, navController)
         }
+        composable(route = "EditHabitFormPage"){
+            EditHabitFormPage(viewModel, navController)
+        }
+
     }
 }
 
