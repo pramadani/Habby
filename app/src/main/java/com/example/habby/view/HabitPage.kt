@@ -1,6 +1,5 @@
 package com.example.habby.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,13 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.habby.model.Habit
-import com.example.habby.model.HabitEvent
 import com.example.habby.viewmodel.HabitViewModel
 
 @Composable
 fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
-    viewModel.habitEventList.collectAsState().value
 
     Column {
         Button(
@@ -36,18 +33,16 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
         ) {
             Text("Add Habit")
         }
-            HabitList(habits, viewModel, navController)
+            HabitList(habits, viewModel)
     }
 
 }
 @Composable
-fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: NavController) {
+fun HabitList(habits: List<Habit>, viewModel: HabitViewModel) {
     LazyColumn {
         items(habits) { habit ->
-
-            val habitEvent = viewModel.getHabitEventByHabitId(habit.habitId)
             Column {
-                HabitItem(habit, habitEvent, viewModel, navController)
+                HabitItem(habit, viewModel)
                 Spacer(modifier = Modifier.height(25.dp))
             }
 
@@ -56,15 +51,9 @@ fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: Nav
 }
 
 @Composable
-fun HabitItem(habit: Habit, habitEvent: HabitEvent?, viewModel: HabitViewModel, navController: NavController) {
+fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
     Row {
-        Column(
-            modifier = Modifier
-                .clickable {
-                    viewModel.setSelectedHabit(habit)
-                    navController.navigate("EditHabitFormPage")
-                }
-        ) {
+        Column {
             Text(text = habit.name)
             Text(text = habit.color)
             Text(text = habit.icon)
@@ -73,18 +62,6 @@ fun HabitItem(habit: Habit, habitEvent: HabitEvent?, viewModel: HabitViewModel, 
             Text(text = habit.isCheck.toString())
             Text(text = habit.isDelayed.toString())
             Text(text = habit.isEvent.toString())
-
-            if (habitEvent != null) {
-                Text(text = habitEvent.eventStartTime.toString())
-            } else {
-                Text("null")
-            }
-
-            if (habitEvent != null) {
-                Text(text = habitEvent.eventEndTime.toString())
-            } else {
-                Text("null")
-            }
 
             var isChecked by remember { mutableStateOf(habit.isCheck) }
 

@@ -13,7 +13,7 @@ interface HabitDao {
     fun getAllHabits(): Flow<List<Habit>>
 
     @Query("SELECT * FROM habits WHERE habitId = :habitId")
-    fun getHabitById(habitId: String): Habit
+    fun getHabitById(habitId: String): Habit?
 
     @Insert
     suspend fun insertHabit(habit: Habit)
