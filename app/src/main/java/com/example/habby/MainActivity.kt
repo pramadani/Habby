@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     val db = getDatabase(applicationContext)
-                    return HabitViewModel(db.habitDao(), db.habitEvent()) as T
+                    return HabitViewModel(db.habitDao()) as T
                 }
             }
         }

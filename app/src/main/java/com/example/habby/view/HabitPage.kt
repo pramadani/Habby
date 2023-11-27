@@ -25,9 +25,6 @@ import com.example.habby.viewmodel.HabitViewModel
 
 @Composable
 fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
-    val habits = viewModel.habitList.collectAsState().value
-    viewModel.habitEventList.collectAsState().value
-
     Column {
         Button(
             onClick = {
@@ -36,12 +33,14 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
         ) {
             Text("Add Habit")
         }
-            HabitList(habits, viewModel, navController)
+            HabitList(viewModel, navController)
     }
 
 }
 @Composable
-fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: NavController) {
+fun HabitList(viewModel: HabitViewModel, navController: NavController) {
+    val habits = viewModel.habitList.collectAsState().value
+    viewModel.habitEventList.collectAsState().value
     LazyColumn {
         items(habits) { habit ->
 

@@ -12,9 +12,6 @@ interface HabitDao {
     @Query("SELECT * FROM habits")
     fun getAllHabits(): Flow<List<Habit>>
 
-    @Query("SELECT * FROM habits WHERE habitId = :habitId")
-    fun getHabitById(habitId: String): Habit
-
     @Insert
     suspend fun insertHabit(habit: Habit)
 
@@ -23,4 +20,13 @@ interface HabitDao {
 
     @Delete
     suspend fun deleteHabit(habit: Habit)
+
+    @Query("SELECT * FROM habit_events")
+    fun getAllHabitEvents(): Flow<List<HabitEvent>>
+    @Insert
+    suspend fun insertHabitEvent(habitEvent: HabitEvent)
+    @Query("SELECT * FROM habit_events WHERE habitId = :habitId ORDER BY eventStartTime DESC LIMIT 1")
+    suspend fun getLatestHabitEventByHabitId(habitId: String): HabitEvent
+    @Update
+    suspend fun updateHabitEvent(habitEvent: HabitEvent)
 }

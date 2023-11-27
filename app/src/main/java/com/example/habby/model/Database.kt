@@ -6,5 +6,4 @@ import androidx.room.RoomDatabase
 @Database(entities = [Habit::class, HabitEvent::class], version = 1)
 abstract class HabbyDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
-    abstract fun habitEvent(): HabitEventDao
 }
