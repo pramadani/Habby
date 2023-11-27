@@ -29,7 +29,7 @@ fun NavLayout(viewModel: HabitViewModel) {
         bottomBar = {
             NavigationBar {
                 var selectedItem by remember { mutableIntStateOf(0) }
-                val items = listOf("Habit", "Task", "Statistic")
+                val items = listOf("Habit", "Statistic")
 
                 items.forEachIndexed { index, item ->
                     NavigationBarItem(

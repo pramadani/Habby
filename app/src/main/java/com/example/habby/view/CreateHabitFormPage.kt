@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -96,163 +97,165 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
             )
         }
 
-        Card(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(115.dp)
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            content = {
-                Column(
+        LazyColumn(content = {
+            item{
+                Card(
                     modifier = Modifier
-                        .padding(0.dp),
+                        .padding(16.dp)
+                        .height(115.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp),
 //                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Row
-                ) {
-                    Text(
-                        "Habit Title",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 10.dp)
-                    )
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Habit Title",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, top = 10.dp)
+                            )
 //                    Spacer(modifier = Modifier.width(8.dp))
 
-                    OutlinedTextField(
-                        value = habitName,
-                        onValueChange = { habitName = it },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        textStyle = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        )
-                    )
+                            OutlinedTextField(
+                                value = habitName,
+                                onValueChange = { habitName = it },
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxSize(),
+                                textStyle = TextStyle(
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 18.sp
+                                )
+                            )
 
-                }
-            }
-        )
-
-        Row(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
-        ) {
-            Card(
-                onClick = {
-                    habitColor = "1"
-                    // navController.navigate("Habit")
-                },
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth(0.48f) // Set width to 50% of the available width
-                    .background(
-                        color = Color.Blue,
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                colors = CardDefaults.cardColors(Color.Blue),
-                content = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
-                    ) {
-                        Text(
-                            "Color",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
+                        }
                     }
-                }
-            )
+                )
 
-            Spacer(modifier = Modifier.width(16.dp)) // Add flexible spacer
-
-            Card(
-                onClick = {
-                    habitIcon = "1"
-                    // navController.navigate("Habit")
-                },
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth() // Take the remaining width
-                    .background(
-                        color = Color.Blue,
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                content = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                            .horizontalScroll(rememberScrollState()),
-                        horizontalArrangement = Arrangement.Center, // Align to the end (right) horizontally
-                        verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
-                    ) {
-                        Text(
-                            "Icon",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    }
-                }
-            )
-        }
-
-        Card(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(115.dp)
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            content = {
-                Column(
+                Row(
                     modifier = Modifier
-                        .padding(0.dp),
-//                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        .wrapContentSize()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
                 ) {
-                    Text(
-                        "Habit Interval",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                    Card(
+                        onClick = {
+                            habitColor = "1"
+                            // navController.navigate("Habit")
+                        },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 10.dp)
+                            .height(50.dp)
+                            .fillMaxWidth(0.48f) // Set width to 50% of the available width
+                            .background(
+                                color = Color.Blue,
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = CardDefaults.cardColors(Color.Blue),
+                        content = {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                            ) {
+                                Text(
+                                    "Color",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+                        }
                     )
+
+                    Spacer(modifier = Modifier.width(16.dp)) // Add flexible spacer
+
+                    Card(
+                        onClick = {
+                            habitIcon = "1"
+                            // navController.navigate("Habit")
+                        },
+                        modifier = Modifier
+                            .height(50.dp)
+                            .fillMaxWidth() // Take the remaining width
+                            .background(
+                                color = Color.Blue,
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        content = {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                                    .horizontalScroll(rememberScrollState()),
+                                horizontalArrangement = Arrangement.Center, // Align to the end (right) horizontally
+                                verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                            ) {
+                                Text(
+                                    "Icon",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+                        }
+                    )
+                }
+
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(115.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp),
+//                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Habit Interval",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, top = 10.dp)
+                            )
 //                    Spacer(modifier = Modifier.width(8.dp))
 
-                    OutlinedTextField(
-                        value = habitInterval,
-                        onValueChange = { habitInterval = it },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        textStyle = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        )
-                    )
+                            OutlinedTextField(
+                                value = habitInterval,
+                                onValueChange = { habitInterval = it },
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxSize(),
+                                textStyle = TextStyle(
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 18.sp
+                                )
+                            )
 
-                }
-            }
-        )
+                        }
+                    }
+                )
 
 //        OutlinedTextField(
 //            value = habitIcon,
@@ -266,82 +269,82 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
 //            label = { Text("Habit Color") }
 //        )
 
-        Card(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(70.dp)
-                .fillMaxWidth()
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            content = {
-                Row(
+                Card(
                     modifier = Modifier
+                        .padding(16.dp)
                         .height(70.dp)
                         .fillMaxWidth()
-                        .padding(0.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        "Habit Start Time",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier
-                            .width(200.dp)
-                            .fillMaxHeight()
-                            .padding(24.dp),
-                    )
-
-                    OutlinedTextField(
-                        value = habitTimeHour,
-                        onValueChange = { habitTimeHour = it },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Blue,
-                            unfocusedBorderColor = Color.Blue,
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
                         ),
-                        modifier = Modifier
-                            .padding(0.dp)
-                            .width(60.dp)
-                            .height(50.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
-                        textStyle = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center // Set text alignment to Center
-                        )
-                    )
+                    content = {
+                        Row(
+                            modifier = Modifier
+                                .height(70.dp)
+                                .fillMaxWidth()
+                                .padding(0.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                "Habit Start Time",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .fillMaxHeight()
+                                    .padding(24.dp),
+                            )
 
-                    OutlinedTextField(
-                        value = habitTimeMinute,
-                        onValueChange = { habitTimeMinute = it },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Blue,
-                            unfocusedBorderColor = Color.Blue,
-                        ),
-                        modifier = Modifier
-                            .padding(0.dp)
-                            .width(60.dp)
-                            .height(50.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
-                        textStyle = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center // Set text alignment to Center
-                        )
-                    )
+                            OutlinedTextField(
+                                value = habitTimeHour,
+                                onValueChange = { habitTimeHour = it },
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = Color.Blue,
+                                    unfocusedBorderColor = Color.Blue,
+                                ),
+                                modifier = Modifier
+                                    .padding(0.dp)
+                                    .width(60.dp)
+                                    .height(50.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
+                                textStyle = TextStyle(
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center // Set text alignment to Center
+                                )
+                            )
+
+                            OutlinedTextField(
+                                value = habitTimeMinute,
+                                onValueChange = { habitTimeMinute = it },
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = Color.Blue,
+                                    unfocusedBorderColor = Color.Blue,
+                                ),
+                                modifier = Modifier
+                                    .padding(0.dp)
+                                    .width(60.dp)
+                                    .height(50.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
+                                textStyle = TextStyle(
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center // Set text alignment to Center
+                                )
+                            )
 
 
 
 
 
-                }
-            }
-        )
+                        }
+                    }
+                )
 
 //        OutlinedTextField(
 //            value = habitTimeHour,
@@ -356,57 +359,57 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
 //        )
 
 
-        Card(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(115.dp)
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            content = {
-                Column(
+                Card(
                     modifier = Modifier
-                        .padding(0.dp),
+                        .padding(16.dp)
+                        .height(115.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp),
 //                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
-                    verticalArrangement = Arrangement.Center // Center items vertically in the Row
-                ) {
-                    Text(
-                        "Habit Duration",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 10.dp)
-                    )
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Habit Duration",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, top = 10.dp)
+                            )
 //                    Spacer(modifier = Modifier.width(8.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(0.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        OutlinedTextField(
-                            value = habitDuration,
-                            onValueChange = { habitDuration = it },
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxHeight()
-                                .width(250.dp),
-                            textStyle = TextStyle(
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        )
-                        Text(text = "Minutes")
-                    }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(0.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                OutlinedTextField(
+                                    value = habitDuration,
+                                    onValueChange = { habitDuration = it },
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .fillMaxHeight()
+                                        .width(250.dp),
+                                    textStyle = TextStyle(
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp
+                                    )
+                                )
+                                Text(text = "Minutes")
+                            }
 
-                }
-            }
-        )
+                        }
+                    }
+                )
 
 //        OutlinedTextField(
 //            value = habitDuration,
@@ -414,87 +417,90 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
 //            label = { Text("Habit Minute") }
 //        )
 
-        Card(
-            onClick = {
-                isEvent = !isEvent
-            },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .height(50.dp)// Set width to 50% of the available width
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            colors = CardDefaults.cardColors(Color.Blue),
-            content = {
-                Row(
+                Card(
+                    onClick = {
+                        isEvent = !isEvent
+                    },
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
-                ) {
-                    Text(
-                        "Set Habit time taken event",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)// Set width to 50% of the available width
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    colors = CardDefaults.cardColors(Color.Blue),
+                    content = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Set Habit time taken event",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
 
-                    Checkbox(
-                        checked = isEvent,
-                        onCheckedChange = { isEvent = it },
-                    )
-                }
-            }
-        )
+                            Checkbox(
+                                checked = isEvent,
+                                onCheckedChange = { isEvent = it },
+                            )
+                        }
+                    }
+                )
 
 //        Checkbox(
 //            checked = isEvent,
 //            onCheckedChange = { isEvent = it },
 //        )
 
-        val context = LocalContext.current
-        val successMessage = "Habit Successfully Created"
-        val warningMessage = "Data is Not Valid"
+                val context = LocalContext.current
+                val successMessage = "Habit Successfully Created"
+                val warningMessage = "Data is Not Valid"
 
-        Button(
-            onClick = {
-                if (
-                    habitName.isEmpty() ||
-                    habitIcon.isEmpty() ||
-                    habitColor.isEmpty() ||
-                    habitTimeHour.isEmpty() ||
-                    habitTimeMinute.isEmpty() ||
-                    habitDuration.isEmpty()
-                ) {
-                    Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()
-                } else {
-                    val habit = Habit(
-                        name = habitName,
-                        icon = habitIcon,
-                        color = habitColor,
-                        interval = habitInterval,
-                        time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
-                            .toString(),
-                        habitDuration = habitDuration.toInt(),
-                        isEvent = isEvent
-                    )
-                    viewModel.insertHabit(habit)
-                    Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
-                    navController.navigate("Habit")
+                Button(
+                    onClick = {
+                        if (
+                            habitName.isEmpty() ||
+                            habitIcon.isEmpty() ||
+                            habitColor.isEmpty() ||
+                            habitTimeHour.isEmpty() ||
+                            habitTimeMinute.isEmpty() ||
+                            habitDuration.isEmpty()
+                        ) {
+                            Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()
+                        } else {
+                            val habit = Habit(
+                                name = habitName,
+                                icon = habitIcon,
+                                color = habitColor,
+                                interval = habitInterval,
+                                time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0)
+                                    .toString(),
+                                habitDuration = habitDuration.toInt(),
+                                isEvent = isEvent
+                            )
+                            viewModel.insertHabit(habit)
+                            Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
+                            navController.navigate("Habit")
+                        }
+                    },
+                    modifier = Modifier
+                        .wrapContentSize()  // Make the button take the full width
+                        .padding(16.dp)      // Add padding for spacing
+                        .align(Alignment.CenterHorizontally),
+                    colors = ButtonDefaults.buttonColors(Color.Green)  // Set the button color to green
+                )
+                {
+                    Text("Create Habit")
                 }
-            },
-            modifier = Modifier
-                .wrapContentSize()  // Make the button take the full width
-                .padding(16.dp)      // Add padding for spacing
-                .align(Alignment.CenterHorizontally),
-            colors = ButtonDefaults.buttonColors(Color.Green)  // Set the button color to green
-        )
-        {
-            Text("Create Habit")
-        }
+            }
+
+        })
 
     }
 }

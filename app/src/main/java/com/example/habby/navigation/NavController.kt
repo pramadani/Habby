@@ -9,7 +9,6 @@ import com.example.habby.view.CreateMenuPage
 import com.example.habby.view.EditHabitFormPage
 import com.example.habby.view.HabitPage
 import com.example.habby.view.StatisticPage
-import com.example.habby.view.TaskPage
 import com.example.habby.viewmodel.HabitViewModel
 
 @Composable
@@ -20,9 +19,6 @@ fun NavController(navController: NavHostController, viewModel: HabitViewModel) {
     ) {
         composable(route = "Habit"){
             HabitPage(viewModel, navController)
-        }
-        composable(route = "Task"){
-            TaskPage()
         }
         composable(route = "Statistic"){
             StatisticPage()

@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,29 +50,59 @@ import com.example.habby.R
 import com.example.habby.model.Habit
 import com.example.habby.model.HabitEvent
 import com.example.habby.viewmodel.HabitViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
+fun getCurrentDateInfo(): Triple<Int, String, String> {
+    val calendar = Calendar.getInstance()
+
+    // Mendapatkan hari
+    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+    // Mendapatkan bulan (dimulai dari 0 untuk Januari)
+    val monthName = SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.time)
+
+    // Mendapatkan tahun
+    val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
+
+    return Triple(dayOfMonth, monthName, dayOfWeek)
+}
 
 @Composable
 fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
 
     Column {
-        Button(
-            onClick = {
-                navController.navigate("CreateMenuPage")
-            },
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(16.dp)
-                .wrapContentSize(),
-            colors = ButtonDefaults.buttonColors(Color.Blue)
-        ) {
-            Text(
-                "Add Habit",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.White
-            )
-            Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.White)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f),
+            ) {
+                val currentDateInfo = getCurrentDateInfo()
+                val (date, month, day) = currentDateInfo
+                Text("$day")
+                Text("$month $date")
+            }
+            Button(
+                onClick = {
+                    navController.navigate("CreateMenuPage")
+                },
+                modifier = Modifier
+//                    .align(Alignment.End)
+                    .padding(16.dp)
+                    .wrapContentSize(),
+                colors = ButtonDefaults.buttonColors(Color.Blue)
+            ) {
+                Text(
+                    "Add Habit",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
+                )
+                Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.White)
+            }
         }
         HabitList(habits, viewModel, navController)
     }
@@ -153,7 +184,21 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
 //                                .align(Alignment.CenterVertically)
                         )
 
-                        if (isStart == true) {
+                        if (isStopped == true) {
+                            Text(
+                                text = "End at ${habitEvent?.eventEndTime}",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+//                            .widthIn(max = 200.dp)
+                                    .wrapContentSize()
+                                    .padding(start = 16.dp) // Add left padding
+//                                    .align(Alignment.CenterVertically)
+                            )
+
+                        }
+                        else if (isStart == true) {
 
                             Text(
                                 text = "Start at ${habitEvent?.eventStartTime}",
