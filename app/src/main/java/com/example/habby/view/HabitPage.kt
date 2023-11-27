@@ -74,7 +74,8 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
 
     Column {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.background(Color.Black)) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -82,7 +83,17 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
             ) {
                 val currentDateInfo = getCurrentDateInfo()
                 val (date, month, day) = currentDateInfo
-                Text("$day")
+                Text(
+                    text = "$day",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+//                    modifier = Modifier
+////                            .widthIn(max = 200.dp)
+//                        .wrapContentSize()
+//                        .padding(start = 16.dp) // Add left padding
+////                                    .align(Alignment.CenterVertically)
+                )
                 Text("$month $date")
             }
             Button(
