@@ -420,11 +420,11 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
         Button(
             onClick = {
                 if (
-                    habitName.isEmpty() &&
-                    habitIcon.isEmpty() &&
-                    habitColor.isEmpty() &&
-                    habitTimeHour.isEmpty() &&
-                    habitTimeMinute.isEmpty() &&
+                    habitName.isEmpty() ||
+                    habitIcon.isEmpty() ||
+                    habitColor.isEmpty() ||
+                    habitTimeHour.isEmpty() ||
+                    habitTimeMinute.isEmpty() ||
                     habitDuration.isEmpty()
                 ) {
                     Toast.makeText(context, warningMessage, Toast.LENGTH_SHORT).show()

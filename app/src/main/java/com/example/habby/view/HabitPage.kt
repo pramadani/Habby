@@ -1,5 +1,6 @@
 package com.example.habby.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,11 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.habby.model.Habit
+import com.example.habby.model.HabitEvent
 import com.example.habby.viewmodel.HabitViewModel
 
 @Composable
 fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
+    viewModel.habitEventList.collectAsState().value
 
     Column {
         Button(
@@ -33,16 +36,18 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
         ) {
             Text("Add Habit")
         }
-            HabitList(habits, viewModel)
+            HabitList(habits, viewModel, navController)
     }
 
 }
 @Composable
-fun HabitList(habits: List<Habit>, viewModel: HabitViewModel) {
+fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: NavController) {
     LazyColumn {
         items(habits) { habit ->
+
+            val habitEvent = viewModel.getHabitEventByHabitId(habit.habitId)
             Column {
-                HabitItem(habit, viewModel)
+                HabitItem(habit, habitEvent, viewModel, navController)
                 Spacer(modifier = Modifier.height(25.dp))
             }
 
@@ -51,9 +56,15 @@ fun HabitList(habits: List<Habit>, viewModel: HabitViewModel) {
 }
 
 @Composable
-fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
+fun HabitItem(habit: Habit, habitEvent: HabitEvent?, viewModel: HabitViewModel, navController: NavController) {
     Row {
-        Column {
+        Column(
+            modifier = Modifier
+                .clickable {
+                    viewModel.setSelectedHabit(habit)
+                    navController.navigate("EditHabitFormPage")
+                }
+        ) {
             Text(text = habit.name)
             Text(text = habit.color)
             Text(text = habit.icon)
@@ -63,8 +74,19 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
             Text(text = habit.isDelayed.toString())
             Text(text = habit.isEvent.toString())
 
+            if (habitEvent != null) {
+                Text(text = habitEvent.eventStartTime.toString())
+            } else {
+                Text("null")
+            }
+
+            if (habitEvent != null) {
+                Text(text = habitEvent.eventEndTime.toString())
+            } else {
+                Text("null")
+            }
+
             var isChecked by remember { mutableStateOf(habit.isCheck) }
-//            var isEvent by remember { mutableStateOf(habit.isEvent) }
 
             RadioButton(
                 selected = isChecked,
@@ -79,11 +101,20 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel) {
                 }
             )
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(
+                onClick = {
+                    isChecked = true
+                    viewModel.startHabitEvent(habit)
+                }
+            ) {
                 Text(text = "Start")
             }
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(
+                onClick = {
+                    viewModel.stopHabitEvent(habit)
+                }
+            ) {
                 Text(text = "Stop")
             }
         }

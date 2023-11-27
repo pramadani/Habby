@@ -11,13 +11,13 @@ import java.util.UUID
 data class Habit(
     @PrimaryKey
     val habitId: String = UUID.randomUUID().toString(),
-    val name: String,
-    val icon: String,
-    val color: String,
+    var name: String,
+    var icon: String,
+    var color: String,
     val dateStart: Long = Date().time,
-    val time: String,
-    val habitDuration: Int,
-    val isEvent: Boolean = false,
+    var time: String,
+    var habitDuration: Int,
+    var isEvent: Boolean = false,
     var isCheck: Boolean = false,
     val isDelayed: Boolean = false
 )
