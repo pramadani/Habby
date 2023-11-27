@@ -68,12 +68,6 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
     var habitInterval by remember { mutableStateOf("") }
 
     Column{
-//        OutlinedTextField(
-//            value = habitName,
-//            onValueChange = { habitName = it },
-//            label = { Text("Habit Name") }
-//        )
-
         Row(
             modifier = Modifier
                 .fillMaxWidth(),

@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -72,7 +73,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
     }
 
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .background(Color(0xFF363C4A)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -144,7 +146,14 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
 
 
 
-        CenteredText(text = "or choice from popular habit below")
+        Text(
+            text = "or choice from popular habit below",
+            color = Color(0xFF9E9FA4),
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
 
         val context = LocalContext.current
 
