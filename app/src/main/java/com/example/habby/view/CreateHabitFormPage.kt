@@ -483,7 +483,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     onClick = {
 
                                         if (habitIcon == null) {
-                                            habitColor = "Money"
+                                            habitIcon = "Money"
                                             buttonColor1 = true
                                         }
                                         else {
@@ -529,7 +529,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     onClick = {
 
                                         if (habitIcon == null) {
-                                            habitColor = "Exercise"
+                                            habitIcon = "Exercise"
                                             buttonColor2 = true
                                         }
                                         else {
@@ -575,7 +575,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     onClick = {
 
                                         if (habitIcon == null) {
-                                            habitColor = "Sleep"
+                                            habitIcon = "Sleep"
                                             buttonColor3 = true
                                         }
                                         else {
@@ -667,7 +667,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     onClick = {
 
                                         if (habitIcon == null) {
-                                            habitColor = "Book"
+                                            habitIcon = "Book"
                                             buttonColor5 = true
                                         }
                                         else {
