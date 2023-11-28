@@ -150,15 +150,15 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     name= "Money",
                     icon= "Money",
                     color= "Red",
-                    time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
-                    habitDuration= "1".toInt(),
+                    time= LocalTime.of("21".toInt(), "0".toInt(),0).toString(),
+                    habitDuration= "30".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
                 val message = "Habit Money Successfully Created"
 
                 viewModel.insertHabit(habit)
-                viewModel.scheduleNotification(context, habit.interval, LocalTime.of("1".toInt(), "1".toInt(),0))
+                viewModel.scheduleNotification(context, habit.interval, LocalTime.of("21".toInt(), "0".toInt(),0))
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 navController.navigate("Habit")
             },
@@ -222,8 +222,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     name= "Exercise",
                     icon= "Exercise",
                     color= "Blue",
-                    time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
-                    habitDuration= "1".toInt(),
+                    time= LocalTime.of("17".toInt(), "0".toInt(),0).toString(),
+                    habitDuration= "60".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
@@ -283,8 +283,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     name= "Sleep",
                     icon= "Sleep",
                     color= "Green",
-                    time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
-                    habitDuration= "1".toInt(),
+                    time= LocalTime.of("22".toInt(), "0".toInt(),0).toString(),
+                    habitDuration= "480".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
@@ -328,7 +328,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                             color = Color.White
                         )
                         Text(
-                            "Start at 23:00",
+                            "Start at 22:00",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.White
@@ -344,8 +344,8 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     name= "Morning",
                     icon= "Morning",
                     color= "Magenta",
-                    time= LocalTime.of("1".toInt(), "1".toInt(),0).toString(),
-                    habitDuration= "1".toInt(),
+                    time= LocalTime.of("6".toInt(), "0".toInt(),0).toString(),
+                    habitDuration= "60".toInt(),
                     interval = "MON-TUE-WED-THU-FRI-SAT-SUN",
                     isEvent= true
                 )
@@ -389,7 +389,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                             color = Color.White
                         )
                         Text(
-                            "Start at 23:00",
+                            "Start at 06:00",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.White
