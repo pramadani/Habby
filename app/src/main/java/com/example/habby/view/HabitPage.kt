@@ -150,7 +150,7 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
 
         Card( onClick = {
             viewModel.setSelectedHabit(habit)
-            navController.navigate("EditHabitFormPage")
+            navController.navigate("com.example.habby.view.EditHabitFormPage")
         },
             modifier = Modifier
                 .padding(16.dp)

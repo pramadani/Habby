@@ -29,7 +29,7 @@ fun NavController(navController: NavHostController, viewModel: HabitViewModel) {
         composable(route = "CreateHabitFormPage"){
             CreateHabitFormPage(viewModel, navController)
         }
-        composable(route = "EditHabitFormPage"){
+        composable(route = "com.example.habby.view.EditHabitFormPage"){
             EditHabitFormPage(viewModel, navController)
         }
 

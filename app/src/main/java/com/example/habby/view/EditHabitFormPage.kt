@@ -1,5 +1,6 @@
 package com.example.habby.view
 
+
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -8,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,10 +17,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -36,6 +36,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,15 +46,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.habby.R
-import com.example.habby.model.Habit
 import com.example.habby.viewmodel.HabitViewModel
 import java.time.LocalTime
 
@@ -63,6 +61,8 @@ import java.time.LocalTime
 fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostController) {
     val selectedHabit = viewModel.getSelectedHabit()
 
+    viewModel.habitProgressList.collectAsState()
+    var habitId = selectedHabit.habitId
     var habitName by remember { mutableStateOf(selectedHabit.name) }
     var habitIcon by remember { mutableStateOf(selectedHabit.icon) }
     var habitColor by remember { mutableStateOf(selectedHabit.color) }
@@ -76,7 +76,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
     Column(
         modifier = Modifier
             .background(Color(0xFF21242B))
-        ){
+    ){
 
         //Row Awal
         Row(
@@ -133,6 +133,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
         //Bagian Bawah
         LazyColumn(content = {
             item{
+
                 Card(
                     onClick = {
                         isEvent = !isEvent
@@ -150,16 +151,16 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                         Row(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = 16.dp), // Spasi horizontal dalam Row
-                            horizontalArrangement = Arrangement.SpaceBetween, // Ruang antar elemen secara rata di sepanjang Row
-                            verticalAlignment = Alignment.CenterVertically // Center items secara vertikal di dalam Row
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 "Delay Habit",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
-                                modifier = Modifier.padding(start = 8.dp) // Padding khusus untuk sisi kiri
+                                modifier = Modifier.padding(start = 8.dp)
                             )
 
                             Checkbox(
@@ -167,6 +168,55 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                                 onCheckedChange = { isEvent = it },
                                 modifier = Modifier.padding(end = 8.dp)
                             )
+                        }
+                    }
+                )
+
+                var checkboxStates by remember { mutableStateOf(List(28) { false }) }
+
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(100.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp)
+                                .fillMaxSize()
+                                .wrapContentSize(Alignment.Center),
+                        ) {
+                            Text(
+                                "Habit Progress",
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                            )
+
+                            val habitProgress = viewModel.getHabitProgress(selectedHabit.habitId)
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                items(habitProgress.size) { index ->
+                                    Checkbox(
+                                        checked = habitProgress[index].progress,
+                                        onCheckedChange = {isChecked ->
+                                            checkboxStates = checkboxStates.toMutableList().also {
+                                                it[index] = isChecked
+                                            }
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 )
@@ -185,7 +235,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                         Column(
                             modifier = Modifier
                                 .padding(0.dp),
-                         verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                            verticalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 "Habit Title",
@@ -214,14 +264,12 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                     }
                 )
 
-                Log.d("habitName", habitName)
-
                 Row(
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Card(
                         onClick = {
@@ -230,7 +278,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                         },
                         modifier = Modifier
                             .height(50.dp)
-                            .fillMaxWidth(0.48f) // Set width to 50% of the available width
+                            .fillMaxWidth(0.48f)
                             .background(
                                 color = Color.Blue,
                                 shape = RoundedCornerShape(16.dp)
@@ -242,7 +290,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                                     .fillMaxSize()
                                     .padding(16.dp),
                                 horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
                                     "Color",
@@ -288,59 +336,6 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                     )
                 }
 
-                var checkboxStates by remember { mutableStateOf(List(28) { false }) }
-
-                Card(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .height(300.dp)
-                        .background(
-                            color = Color.Blue,
-                            shape = RoundedCornerShape(16.dp)
-                        ),
-                    content = {
-                        Column(
-                            modifier = Modifier
-                                .padding(0.dp)
-                                .fillMaxSize()
-                                .wrapContentSize(Alignment.Center),
-                        ) {
-                            Text(
-                                "Habit Progress",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                            )
-
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp),
-                            ) {
-                                repeat(4) { rowIndex ->
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceEvenly
-                                    ) {
-                                        repeat(7) { columnIndex ->
-                                            val index = (rowIndex * 7) + columnIndex
-                                            Checkbox(
-                                                checked = checkboxStates[index],
-                                                onCheckedChange = { isChecked ->
-                                                    checkboxStates = checkboxStates.toMutableList().also {
-                                                        it[index] = isChecked
-                                                    }
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
 
                 Card(
                     modifier = Modifier
@@ -745,7 +740,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                         Column(
                             modifier = Modifier
                                 .padding(0.dp),
-                      verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
                         ) {
                             Text(
                                 "Habit Duration",
@@ -824,7 +819,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                 Button(
                     onClick = {
                         if (
-                            //habitName.isEmpty() ||
+                        //habitName.isEmpty() ||
                             habitIcon.isEmpty() ||
                             habitColor.isEmpty() ||
                             habitTimeHour.isEmpty() ||
