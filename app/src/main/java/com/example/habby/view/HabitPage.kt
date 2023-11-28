@@ -52,6 +52,7 @@ import com.example.habby.model.HabitEvent
 import com.example.habby.viewmodel.HabitViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 fun getCurrentDateInfo(): Triple<Int, String, String> {
@@ -201,8 +202,9 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
                         )
 
                         if (isStopped == true) {
+                            val endJam = habitEvent?.eventEndTime?.let { convertMillisToTime(it) }
                             Text(
-                                text = "End at ${habitEvent?.eventEndTime}",
+                                text = "End at ${endJam}",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
@@ -215,9 +217,10 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
 
                         }
                         else if (isStart == true) {
+                            val startJam = habitEvent?.eventStartTime?.let { convertMillisToTime(it) }
 
                             Text(
-                                text = "Start at ${habitEvent?.eventStartTime}",
+                                text = "Start at $startJam",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
@@ -230,6 +233,7 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
                         }
 
                         else if (habit.isEvent == true) {
+
                             Text(
                                 text = "${habit.habitDuration} minutes",
                                 fontSize = 14.sp,
@@ -329,4 +333,12 @@ fun HabitItem(habit: Habit, viewModel: HabitViewModel, habitEvent: HabitEvent?, 
             }
         )
     }
+}
+
+
+fun convertMillisToTime(millis: Long): String {
+    val date = Date(millis)
+    val format = SimpleDateFormat("HH:mm") // Format jam dan menit
+
+    return format.format(date)
 }
