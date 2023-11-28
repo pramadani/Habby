@@ -621,7 +621,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                     onClick = {
 
                                         if (habitIcon == null) {
-                                            habitColor = "Morning"
+                                            habitIcon = "Morning"
                                             buttonColor4 = true
                                         }
                                         else {
