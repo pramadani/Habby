@@ -24,12 +24,17 @@ class HabitViewModel(private val habitDao: HabitDao) : ViewModel() {
 
     private lateinit var selectedHabit: Habit
 
+    fun getHabitProgress(habitID: String): List<HabitProgress> {
+        val filteredList = habitProgressList.value.filter { it.habitId == habitID }
+        return filteredList
+    }
+
     fun getStatisticAllAverageDuration(): Int {
         // Menghitung total durasi menggunakan fungsi yang sudah dibuat sebelumnya
         val totalDurationInHours = getStatisticAllTotalDuration()
 
         // Menghitung jumlah habit
-        val totalHabits = habitList.value.size
+        val totalHabits = habitProgressList.value.size
 
         // Menghitung rata-rata durasi
         return if (totalHabits > 0) {

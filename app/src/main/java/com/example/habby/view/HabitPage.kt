@@ -73,7 +73,7 @@ fun getCurrentDateInfo(): Triple<Int, String, String> {
 fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
     val habits = viewModel.habitList.collectAsState().value
 
-    Column {
+    Column(modifier = Modifier.background(Color.Black)) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.background(Color.Black)) {
             Column(
@@ -104,7 +104,7 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
 //                    .align(Alignment.End)
                     .padding(16.dp)
                     .wrapContentSize(),
-                colors = ButtonDefaults.buttonColors(Color.Blue)
+                colors = ButtonDefaults.buttonColors(Color(0xFF397CFF))
             ) {
                 Text(
                     "Add Habit",
@@ -124,12 +124,11 @@ fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: Nav
 
     viewModel.habitEventList.collectAsState().value
 
-    LazyColumn {
+    LazyColumn(modifier = Modifier.background(color = Color(0xFF1A1B20), RoundedCornerShape(12.dp, 12.dp))) {
         items(habits) { habit ->
             val habitEvent = viewModel.getHabitEventByHabitId(habit.habitId)
             Column {
                 HabitItem(habit, viewModel, habitEvent, navController)
-                Spacer(modifier = Modifier.height(0.dp))
             }
 
         }

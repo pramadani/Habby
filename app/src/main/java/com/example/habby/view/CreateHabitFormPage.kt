@@ -1165,8 +1165,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                         Row(
                             modifier = Modifier
                                 .height(70.dp)
-                                .fillMaxWidth()
-                                .padding(0.dp),
+                                .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -1185,15 +1184,15 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                 value = habitTimeHour,
                                 onValueChange = { habitTimeHour = it },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    focusedBorderColor = Color.Blue,
-                                    unfocusedBorderColor = Color.Blue,
+                                    focusedBorderColor = Color(0xFF397CFF),
+                                    unfocusedBorderColor = Color(0xFF397CFF),
                                 ),
                                 modifier = Modifier
                                     .padding(0.dp)
                                     .width(60.dp)
                                     .height(50.dp)
                                     .clip(RoundedCornerShape(16.dp))
-                                    .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
+                                    .background(Color(0xFF397CFF), shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
                                 textStyle = TextStyle(
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
@@ -1205,15 +1204,15 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                                 value = habitTimeMinute,
                                 onValueChange = { habitTimeMinute = it },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    focusedBorderColor = Color.Blue,
-                                    unfocusedBorderColor = Color.Blue,
+                                    focusedBorderColor = Color(0xFF397CFF),
+                                    unfocusedBorderColor = Color(0xFF397CFF),
                                 ),
                                 modifier = Modifier
                                     .padding(0.dp)
                                     .width(60.dp)
                                     .height(50.dp)
                                     .clip(RoundedCornerShape(16.dp))
-                                    .background(Color.Blue, shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
+                                    .background(Color(0xFF397CFF), shape = RoundedCornerShape(16.dp)), // Set background color and rounded corners here
                                 textStyle = TextStyle(
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
@@ -1312,7 +1311,7 @@ fun CreateHabitFormPage(viewModel: HabitViewModel, navController: NavHostControl
                             color = Color.Blue,
                             shape = RoundedCornerShape(16.dp)
                         ),
-                    colors = CardDefaults.cardColors(Color.Blue),
+                    colors = CardDefaults.cardColors(Color(0xFF397CFF)),
                     content = {
                         Row(
                             modifier = Modifier

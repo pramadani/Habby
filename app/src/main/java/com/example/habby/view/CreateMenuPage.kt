@@ -103,7 +103,7 @@ fun CreateMenuPage(viewModel: HabitViewModel, navController: NavController) {
                     color = Color.Blue,
                     shape = RoundedCornerShape(16.dp)
                 ),
-            colors = CardDefaults.cardColors(Color.Blue),
+            colors = CardDefaults.cardColors(Color(0xFF397CFF)),
             content = {
                 Row(
                     modifier = Modifier
