@@ -17,8 +17,8 @@ class AlarmReceiver: BroadcastReceiver() {
     @SuppressLint("MissingPermission")
     private fun showNotification(context: Context?) {
         val builder = NotificationCompat.Builder(context!!, "channel1")
-            .setContentTitle("Reminder3")
-            .setContentText("Waktunya !")
+            .setContentTitle("Habit Reminder")
+            .setContentText("It's time to do today habit!")
             .setSmallIcon(R.drawable.ic_launcher_foreground) // Ganti dengan ikon aplikasi Anda
 
         val notificationManager = NotificationManagerCompat.from(context)

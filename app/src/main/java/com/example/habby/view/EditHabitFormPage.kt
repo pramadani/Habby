@@ -1,6 +1,5 @@
 package com.example.habby.view
 
-
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -46,12 +47,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.habby.R
+import com.example.habby.model.Habit
 import com.example.habby.viewmodel.HabitViewModel
 import java.time.LocalTime
 
@@ -70,7 +75,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
     var habitTimeMinute by remember { mutableStateOf(LocalTime.parse(selectedHabit.time).minute.toString()) }
     var habitDuration by remember { mutableStateOf(selectedHabit.habitDuration.toString()) }
     var isEvent by remember { mutableStateOf(selectedHabit.isEvent) }
-    var habitInterval by remember { mutableStateOf("Testing") }
+    var habitInterval by remember { mutableStateOf(selectedHabit.interval) }
 
 
     Column(
@@ -133,45 +138,6 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
         //Bagian Bawah
         LazyColumn(content = {
             item{
-
-                Card(
-                    onClick = {
-                        isEvent = !isEvent
-                    },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(
-                            color = Color(0xFF9039FF),
-                            shape = RoundedCornerShape(16.dp)
-                        ),
-                    colors = CardDefaults.cardColors(Color.Blue),
-                    content = {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                "Delay Habit",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-
-                            Checkbox(
-                                checked = isEvent,
-                                onCheckedChange = { isEvent = it },
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                        }
-                    }
-                )
-
                 var checkboxStates by remember { mutableStateOf(List(28) { false }) }
 
                 Card(
@@ -370,27 +336,25 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
+                                var selectedDays = habitInterval.split("-").filter { it.isNotBlank()}
 
-                                var buttonColor1 by remember { mutableStateOf(false) }
-                                var buttonColor2 by remember { mutableStateOf(false) }
-                                var buttonColor3 by remember { mutableStateOf(false) }
-                                var buttonColor4 by remember { mutableStateOf(false) }
-                                var buttonColor5 by remember { mutableStateOf(false) }
-                                var buttonColor6 by remember { mutableStateOf(false) }
-                                var buttonColor7 by remember { mutableStateOf(false) }
+                                var buttonColor1 by remember { mutableStateOf(selectedDays.contains("SUN")) }
+                                var buttonColor2 by remember { mutableStateOf(selectedDays.contains("MON")) }
+                                var buttonColor3 by remember { mutableStateOf(selectedDays.contains("TUE")) }
+                                var buttonColor4 by remember { mutableStateOf(selectedDays.contains("WED")) }
+                                var buttonColor5 by remember { mutableStateOf(selectedDays.contains("THU")) }
+                                var buttonColor6 by remember { mutableStateOf(selectedDays.contains("FRI")) }
+                                var buttonColor7 by remember { mutableStateOf(selectedDays.contains("SAT")) }
 
                                 Card(
                                     onClick = {
-
                                         if (buttonColor1 == false) {
-                                            habitInterval += "-SUN"
+                                            habitInterval += "SUN"
                                             buttonColor1 = true
                                         } else if (buttonColor1 == true) {
-                                            habitInterval = habitInterval.replace("-SUN", "");
+                                            habitInterval = habitInterval.replace("SUN", " ");
                                             buttonColor1 = false
                                         }
-
-
                                     },
                                     modifier = Modifier
                                         .padding(4.dp)
@@ -835,8 +799,7 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                             selectedHabit.time = LocalTime.of(habitTimeHour.toInt(), habitTimeMinute.toInt(), 0).toString()
                             selectedHabit.habitDuration = habitDuration.toInt()
                             selectedHabit.isEvent = isEvent
-                            Log.d("Uhuyhasudy", habitName)
-                            Log.d("fgfasjdkasd", selectedHabit.name)
+                            selectedHabit.interval = habitInterval
                             viewModel.updateHabit(selectedHabit)
                             Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
                             navController.navigate("Habit")
