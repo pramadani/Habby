@@ -26,6 +26,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -230,78 +231,622 @@ fun EditHabitFormPage(viewModel: HabitViewModel, navController: NavHostControlle
                     }
                 )
 
-                Row(
+                Card(
                     modifier = Modifier
-                        .wrapContentSize()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Card(
-                        onClick = {
-                            habitColor = "1"
-                            // navController.navigate("Habit")
-                        },
-                        modifier = Modifier
-                            .height(50.dp)
-                            .fillMaxWidth(0.48f)
-                            .background(
-                                color = Color.Blue,
-                                shape = RoundedCornerShape(16.dp)
-                            ),
-                        colors = CardDefaults.cardColors(Color.Blue),
-                        content = {
+                        .padding(16.dp)
+                        .height(115.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp),
+//                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Color",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, top = 10.dp)
+                            )
+//                    Spacer(modifier = Modifier.width(8.dp))
+
                             Row(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.Center,
+                                    .padding(16.dp)
+                                    .fillMaxSize(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    "Color",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
+
+                                var buttonColor1 by remember { mutableStateOf(false) }
+                                var buttonColor2 by remember { mutableStateOf(false) }
+                                var buttonColor3 by remember { mutableStateOf(false) }
+                                var buttonColor4 by remember { mutableStateOf(false) }
+                                var buttonColor5 by remember { mutableStateOf(false) }
+                                if (selectedHabit.color == "Blue") {
+                                    buttonColor1 = true
+                                }
+                                else if (selectedHabit.color == "Green") {
+                                    buttonColor2 = true
+                                }
+                                else if (selectedHabit.color == "Yellow") {
+                                    buttonColor3 = true
+                                }
+                                else if (selectedHabit.color == "Magenta") {
+                                    buttonColor4 = true
+                                }
+                                else if (selectedHabit.color == "Red") {
+                                    buttonColor5 = true
+                                }
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitColor == null) {
+                                            habitColor = "Blue"
+                                            buttonColor1 = true
+                                        }
+                                        else {
+                                            habitColor = "Blue"
+                                            buttonColor1 = true
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = Color.Blue,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(Color.Blue),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (buttonColor1 == true) {
+//                                                val imagePainterStart = painterResource(id = R.drawable.ic_start_event)
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = null,
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(32.dp)
+                                                )
+                                            }
+                                        }
+                                    }
                                 )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitColor == null) {
+                                            habitColor = "Green"
+                                            buttonColor2 = true
+                                        }
+                                        else {
+                                            habitColor = "Green"
+                                            buttonColor1 = false
+                                            buttonColor2 = true
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = Color.Green,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(Color.Green),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (buttonColor2 == true) {
+//                                                val imagePainterStart = painterResource(id = R.drawable.ic_start_event)
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = null,
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(32.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitColor == null) {
+                                            habitColor = "Blue"
+                                            buttonColor3 = true
+                                        }
+                                        else {
+                                            habitColor = "Yellow"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = true
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = Color.Yellow,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(Color.Yellow),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (buttonColor3 == true) {
+//                                                val imagePainterStart = painterResource(id = R.drawable.ic_start_event)
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = null,
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(32.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitColor == null) {
+                                            habitColor = "Magenta"
+                                            buttonColor4 = true
+                                        }
+                                        else {
+                                            habitColor = "Magenta"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = true
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = Color.Magenta,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(Color.Magenta),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (buttonColor4 == true) {
+//                                                val imagePainterStart = painterResource(id = R.drawable.ic_start_event)
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = null,
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(32.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitColor == null) {
+                                            habitColor = "Red"
+                                            buttonColor5 = true
+                                        }
+                                        else {
+                                            habitColor = "Red"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = true
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = Color.Red,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(Color.Red),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (buttonColor5 == true) {
+//                                                val imagePainterStart = painterResource(id = R.drawable.ic_start_event)
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = null,
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(32.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+
                             }
+
+
+//                            OutlinedTextField(
+//                                value = habitInterval,
+//                                onValueChange = { habitInterval = it },
+//                                modifier = Modifier
+//                                    .padding(16.dp)
+//                                    .fillMaxSize(),
+//                                textStyle = TextStyle(
+//                                    color = Color.White,
+//                                    fontWeight = FontWeight.Bold,
+//                                    fontSize = 18.sp
+//                                )
+//                            )
+
                         }
-                    )
+                    }
+                )
 
-                    Spacer(modifier = Modifier.width(16.dp)) // Add flexible spacer
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(115.dp)
+                        .background(
+                            color = Color.Blue,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    content = {
+                        Column(
+                            modifier = Modifier
+                                .padding(0.dp),
+//                     horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally in the Row
+                            verticalArrangement = Arrangement.Center // Center items vertically in the Row
+                        ) {
+                            Text(
+                                "Icon",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, top = 10.dp)
+                            )
+//                    Spacer(modifier = Modifier.width(8.dp))
 
-                    Card(
-                        onClick = {
-                            habitIcon = "1"
-                            // navController.navigate("Habit")
-                        },
-                        modifier = Modifier
-                            .height(50.dp)
-                            .fillMaxWidth() // Take the remaining width
-                            .background(
-                                color = Color.Blue,
-                                shape = RoundedCornerShape(16.dp)
-                            ),
-                        content = {
                             Row(
                                 modifier = Modifier
-                                    .fillMaxSize()
                                     .padding(16.dp)
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.Center, // Align to the end (right) horizontally
-                                verticalAlignment = Alignment.CenterVertically // Center items vertically in the Row
+                                    .fillMaxSize(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    "Icon",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                            }
-                        }
-                    )
-                }
 
+                                var buttonColor1 by remember { mutableStateOf(false) }
+                                var buttonColor2 by remember { mutableStateOf(false) }
+                                var buttonColor3 by remember { mutableStateOf(false) }
+                                var buttonColor4 by remember { mutableStateOf(false) }
+                                var buttonColor5 by remember { mutableStateOf(false) }
+
+                                if (selectedHabit.icon == "Money") {
+                                    buttonColor1 = true
+                                }
+                                else if (selectedHabit.icon == "Exercise") {
+                                    buttonColor2 = true
+                                }
+                                else if (selectedHabit.icon == "Sleep") {
+                                    buttonColor3 = true
+                                }
+                                else if (selectedHabit.icon == "Morning") {
+                                    buttonColor4 = true
+                                }
+                                else if (selectedHabit.icon == "Book") {
+                                    buttonColor5 = true
+                                }
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitIcon == null) {
+                                            habitIcon = "Money"
+                                            buttonColor1 = true
+                                        }
+                                        else {
+                                            habitIcon = "Money"
+                                            buttonColor1 = true
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor1 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor1 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val imagePainterStart = painterResource(id = R.drawable.ic_money)
+                                            Icon(
+                                                painter = imagePainterStart,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitIcon == null) {
+                                            habitIcon = "Exercise"
+                                            buttonColor2 = true
+                                        }
+                                        else {
+                                            habitIcon = "Exercise"
+                                            buttonColor1 = false
+                                            buttonColor2 = true
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor2 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor2 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val imagePainterStart = painterResource(id = R.drawable.ic_exercise)
+                                            Icon(
+                                                painter = imagePainterStart,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitIcon == null) {
+                                            habitIcon = "Sleep"
+                                            buttonColor3 = true
+                                        }
+                                        else {
+                                            habitIcon = "Sleep"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = true
+                                            buttonColor4 = false
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor3 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor3 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val imagePainterStart = painterResource(id = R.drawable.ic_sleep)
+                                            Icon(
+                                                painter = imagePainterStart,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitIcon == null) {
+                                            habitIcon = "Morning"
+                                            buttonColor4 = true
+                                        }
+                                        else {
+                                            habitIcon = "Morning"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = true
+                                            buttonColor5 = false
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor4 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor4 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val imagePainterStart = painterResource(id = R.drawable.ic_morning)
+                                            Icon(
+                                                painter = imagePainterStart,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        }
+                                    }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Card(
+                                    onClick = {
+
+                                        if (habitIcon == null) {
+                                            habitIcon = "Book"
+                                            buttonColor5 = true
+                                        }
+                                        else {
+                                            habitIcon = "Book"
+                                            buttonColor1 = false
+                                            buttonColor2 = false
+                                            buttonColor3 = false
+                                            buttonColor4 = false
+                                            buttonColor5 = true
+
+                                        }
+
+
+                                    },
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .weight(1f)
+                                        .background(
+                                            color = if (buttonColor5 == true) Color.Blue else Color.Gray,
+                                            shape = RoundedCornerShape(16.dp)
+                                        ),
+                                    colors = CardDefaults.cardColors(if (buttonColor5 == true) Color.Blue else Color.Gray),
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val imagePainterStart = painterResource(id = R.drawable.ic_book)
+                                            Icon(
+                                                painter = imagePainterStart,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        }
+                                    }
+                                )
+
+                            }
+
+
+//                            OutlinedTextField(
+//                                value = habitInterval,
+//                                onValueChange = { habitInterval = it },
+//                                modifier = Modifier
+//                                    .padding(16.dp)
+//                                    .fillMaxSize(),
+//                                textStyle = TextStyle(
+//                                    color = Color.White,
+//                                    fontWeight = FontWeight.Bold,
+//                                    fontSize = 18.sp
+//                                )
+//                            )
+
+                        }
+                    }
+                )
 
                 Card(
                     modifier = Modifier

@@ -18,6 +18,8 @@ interface HabitDao {
     @Delete
     suspend fun deleteHabit(habit: Habit)
 
+    @Query("SELECT * FROM habits")
+    fun getAllHabitsOffline(): List<Habit>
 
     @Query("SELECT * FROM habit_events")
     fun getAllHabitEvents(): Flow<List<HabitEvent>>

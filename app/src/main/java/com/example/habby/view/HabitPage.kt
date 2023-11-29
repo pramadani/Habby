@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,7 @@ import androidx.navigation.NavController
 import com.example.habby.R
 import com.example.habby.model.Habit
 import com.example.habby.model.HabitEvent
+import com.example.habby.notification.scheduleMidnightUpdate
 import com.example.habby.viewmodel.HabitViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -58,13 +60,8 @@ import java.util.Locale
 fun getCurrentDateInfo(): Triple<Int, String, String> {
     val calendar = Calendar.getInstance()
 
-    // Mendapatkan hari
     val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-
-    // Mendapatkan bulan (dimulai dari 0 untuk Januari)
     val monthName = SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.time)
-
-    // Mendapatkan tahun
     val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
 
     return Triple(dayOfMonth, monthName, dayOfWeek)
@@ -118,7 +115,7 @@ fun HabitPage(viewModel: HabitViewModel, navController: NavController) {
         }
         HabitList(habits, viewModel, navController)
     }
-
+    scheduleMidnightUpdate(LocalContext.current)
 }
 @Composable
 fun HabitList(habits: List<Habit>, viewModel: HabitViewModel, navController: NavController) {
